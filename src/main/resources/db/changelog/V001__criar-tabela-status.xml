@@ -7,7 +7,7 @@
                    
 	<changeSet id="1" author="Vinicius">
         <createTable tableName="status">
-            <column name="id" type="integer">
+            <column name="id" type="int">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="nome" type="varchar(255)">

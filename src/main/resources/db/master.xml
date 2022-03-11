@@ -6,5 +6,12 @@
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
     
     <include file="db/changelog/V001__criar-tabela-status.xml" relativeToChangelogFile="false"/>
+    <include file="db/changelog/V002__criar-tabela-categoria.xml" relativeToChangelogFile="false"/>
+    <include file="db/changelog/V003__criar-tabela-senioridade.xml" relativeToChangelogFile="false"/>
+    <include file="db/changelog/V004__criar-tabela-competencia.xml" relativeToChangelogFile="false"/>
+    <include file="db/changelog/V005__criar-tabela-colaborador.xml" relativeToChangelogFile="false"/>
+    <include file="db/changelog/V006__criar-tabela-turma-formacao.xml" relativeToChangelogFile="false"/>
+    <include file="db/changelog/V007__criar-tabela-competencia_colaborador.xml" relativeToChangelogFile="false"/>
+    <include file="db/changelog/V008__criar-tabela-turma-competencia-colaborador.xml" relativeToChangelogFile="false"/>
     
 </databaseChangeLog>

@@ -1,0 +1,49 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+
+	<changeSet id="1" author="Vinicius">
+		<createSequence schemaName="public" sequenceName="seq_id_competencia" startValue="1" incrementBy="1"/>
+		<createTable tableName="competencia">
+			<column name="id" type="int" defaultValueComputed="nextval('seq_id_competencia')">
+				<constraints primaryKey="true" nullable="false"/>
+			</column>
+			<column name="nome" type="varchar(255)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="descricao" type="text">
+				<constraints nullable="false"/>
+			</column>
+			<column name="categoria_id" type="int">
+				<constraints nullable="false" foreignKeyName="fk_categoria_id" references="categoria(id)"/>
+			</column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="2" author="Vinicius">
+		<insert tableName="competencia">
+			<column name="nome" value="Spring"/>
+			<column name="descricao" value="Framework para desenvolvimento backend"/>
+			<column name="categoria_id" value="1"/>
+		</insert>
+		<insert tableName="competencia">
+			<column name="nome" value="Angular"/>
+			<column name="descricao" value="Framework para desenvolvimento frontend"/>
+			<column name="categoria_id" value="2"/>
+		</insert>
+		<insert tableName="competencia">
+			<column name="nome" value="Postgres"/>
+			<column name="descricao" value="Banco de dados relacional"/>
+			<column name="categoria_id" value="3"/>
+		</insert>
+		<insert tableName="competencia">
+			<column name="nome" value="Git"/>
+			<column name="descricao" value="Ferramenta para versionamento"/>
+			<column name="categoria_id" value="8"/>
+		</insert>
+	</changeSet>
+
+</databaseChangeLog>
