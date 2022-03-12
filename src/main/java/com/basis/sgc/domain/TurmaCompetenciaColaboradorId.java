@@ -1,5 +1,7 @@
 package com.basis.sgc.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
@@ -11,8 +13,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @Embeddable
-public class TurmaCompetenciaColaboradorId {
+public class TurmaCompetenciaColaboradorId implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	@Column(name = "turma_id", nullable = false)
 	private Integer turmaId;
 	
