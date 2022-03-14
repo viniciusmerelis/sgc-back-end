@@ -1,0 +1,77 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+
+	<changeSet id="1" author="Vinicius">
+		<createSequence schemaName="public" sequenceName="seq_id_colaborador" startValue="1" incrementBy="1"/>
+		<createTable tableName="colaborador">
+			<column name="id" type="int" defaultValueComputed="nextval('seq_id_colaborador')">
+				<constraints primaryKey="true" nullable="false"/>
+			</column>
+			<column name="nome" type="varchar(255)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="sobrenome" type="varchar(255)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="cpf" type="varchar(11)">
+				<constraints nullable="false" unique="true"/>
+			</column>
+			<column name="email" type="varchar(50)">
+				<constraints nullable="false" unique="true"/>
+			</column>
+			<column name="data_nasc" type="timestamp">
+				<constraints nullable="false"/>
+			</column>
+			<column name="data_admi" type="timestamp">
+				<constraints nullable="false"/>
+			</column>
+			<column name="senioridade_id" type="int">
+				<constraints nullable="false" foreignKeyName="fk_senioridade_id" references="senioridade(id)"/>
+			</column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="2" author="Vinicius">
+		<insert tableName="colaborador">
+			<column name="nome" value="Joao"/>
+			<column name="sobrenome" value="da Silva"/>
+			<column name="cpf" value="12345678911"/>
+			<column name="email" value="joao@gmail.com"/>
+			<column name="data_nasc" value="1999-01-05"/>
+			<column name="data_admi" value="2022-05-21"/>
+			<column name="senioridade_id" value="2"/>
+		</insert>
+		<insert tableName="colaborador">
+			<column name="nome" value="Maria"/>
+			<column name="sobrenome" value="Santos"/>
+			<column name="cpf" value="78945612311"/>
+			<column name="email" value="maria@gmail.com"/>
+			<column name="data_nasc" value="2001-06-26"/>
+			<column name="data_admi" value="2022-04-12"/>
+			<column name="senioridade_id" value="3"/>
+		</insert>
+		<insert tableName="colaborador">
+			<column name="nome" value="Pedro"/>
+			<column name="sobrenome" value="Fraga"/>
+			<column name="cpf" value="45678912311"/>
+			<column name="email" value="pedro@gmail.com"/>
+			<column name="data_nasc" value="1998-12-30"/>
+			<column name="data_admi" value="2020-08-27"/>
+			<column name="senioridade_id" value="3"/>
+		</insert>
+		<insert tableName="colaborador">
+			<column name="nome" value="Ana"/>
+			<column name="sobrenome" value="Cunha"/>
+			<column name="cpf" value="78912365411"/>
+			<column name="email" value="ana@gmail.com"/>
+			<column name="data_nasc" value="1997-11-02"/>
+			<column name="data_admi" value="2021-03-19"/>
+			<column name="senioridade_id" value="4"/>
+		</insert>
+	</changeSet>
+                   
+</databaseChangeLog>            
