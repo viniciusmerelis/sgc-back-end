@@ -1,6 +1,8 @@
 package com.basis.sgc.service.dto;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,4 +19,5 @@ public class ColaboradorDto {
 	private LocalDateTime dataNascimento;
 	private LocalDateTime dataAdmissao;
 	private SenioridadeDto senioridade;
+	private Set<CompetenciaResumoDto> competencias = new HashSet<>();
 }

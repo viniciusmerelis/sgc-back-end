@@ -23,5 +23,4 @@ public class Categoria {
 	
 	@Column(nullable = false)
 	private String nome;
-
 }

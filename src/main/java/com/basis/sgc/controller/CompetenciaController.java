@@ -1,0 +1,60 @@
+package com.basis.sgc.controller;
+
+import java.util.List;
+
+import javax.validation.Valid;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.basis.sgc.service.CompetenciaService;
+import com.basis.sgc.service.dto.CompetenciaDto;
+import com.basis.sgc.service.dto.input.CompetenciaDtoInput;
+
+import lombok.AllArgsConstructor;
+
+@RestController
+@RequestMapping("/api/competencias")
+@AllArgsConstructor
+public class CompetenciaController {
+
+	private CompetenciaService competenciaService;
+
+	@GetMapping
+	public ResponseEntity<List<CompetenciaDto>> listarTodas() {
+		return ResponseEntity.ok(competenciaService.listarTodas());
+	}
+
+	@GetMapping("/{competenciaId}")
+	public ResponseEntity<CompetenciaDto> buscarPeloId(@PathVariable Integer competenciaId) {
+		return ResponseEntity.ok(competenciaService.buscarPeloId(competenciaId));
+	}
+
+	@PostMapping
+	public ResponseEntity<CompetenciaDto> salvar(@RequestBody @Valid CompetenciaDtoInput competenciaDtoInput) {
+		return ResponseEntity.status(HttpStatus.CREATED)
+				.body(competenciaService.salvar(competenciaDtoInput));
+	}
+
+	@PutMapping("/{competenciaId}")
+	public ResponseEntity<CompetenciaDto> atualizar(@PathVariable Integer competenciaId,
+			@RequestBody @Valid CompetenciaDtoInput competenciaDtoInput) {		
+		return ResponseEntity.ok(competenciaService.atualizar(competenciaId, competenciaDtoInput));
+	}
+	
+	@DeleteMapping("/{competenciaId}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void excluir(@PathVariable Integer competenciaId) {
+		competenciaService.excluir(competenciaId);
+	}
+
+}
