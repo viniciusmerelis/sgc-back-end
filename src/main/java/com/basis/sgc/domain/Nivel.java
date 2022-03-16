@@ -1,4 +1,4 @@
-package com.basis.sgc.service.dto;
+package com.basis.sgc.domain;
 
 public enum Nivel {
 	CONHECE,

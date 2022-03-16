@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.basis.sgc.service.ColaboradorService;
 import com.basis.sgc.service.dto.ColaboradorDto;
+import com.basis.sgc.service.dto.CompetenciaColaboradorNivelMaximoDto;
 import com.basis.sgc.service.dto.input.ColaboradorDtoInput;
 
 import lombok.AllArgsConstructor;
@@ -54,5 +55,10 @@ public class ColaboradorController {
 	public ResponseEntity<?> excluir(@PathVariable Integer colaboradorId) {
 		colaboradorService.excluir(colaboradorId);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping("/nivel-maximo")
+	public ResponseEntity<List<CompetenciaColaboradorNivelMaximoDto>> buscarColaboradoresCompetenciaNivelMaximo() {
+		return ResponseEntity.ok(colaboradorService.buscarColaboradorCompetenciaNivelMaximo());
 	}
 }
