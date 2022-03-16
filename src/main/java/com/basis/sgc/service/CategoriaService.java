@@ -31,6 +31,7 @@ public class CategoriaService {
 		return categoriaMapper.toDto(buscarOuFalhar(categoriaId));
 	}
 	
+	@Transactional
 	public Categoria buscarOuFalhar(Integer categoriaId) {
 		return categoriaRepository.findById(categoriaId)
 				.orElseThrow(() -> new EntidadeNaoEncontradaException(

@@ -31,6 +31,7 @@ public class SenioridadeService {
 		return senioridadeMapper.toDto(buscarOuFalhar(senioridadeId));
 	}
 	
+	@Transactional
 	public Senioridade buscarOuFalhar(Integer senioridadeId) {
 		return senioridadeRepository.findById(senioridadeId)
 				.orElseThrow(() -> new EntidadeNaoEncontradaException("Não existe uma senioridade com código " + senioridadeId));

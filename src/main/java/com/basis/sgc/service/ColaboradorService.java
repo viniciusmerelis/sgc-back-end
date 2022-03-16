@@ -1,6 +1,9 @@
 package com.basis.sgc.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -18,6 +21,10 @@ import com.basis.sgc.repository.ColaboradorRepository;
 import com.basis.sgc.repository.CompetenciaRepository;
 import com.basis.sgc.repository.SenioridadeRepository;
 import com.basis.sgc.service.dto.ColaboradorDto;
+import com.basis.sgc.service.dto.ColaboradorResumoDto;
+import com.basis.sgc.service.dto.CompetenciaColaboradorNivelMaximoDto;
+import com.basis.sgc.service.dto.CompetenciaColaboradorNivelMaximoListDto;
+import com.basis.sgc.service.dto.CompetenciaResumoDto;
 import com.basis.sgc.service.dto.input.ColaboradorDtoInput;
 import com.basis.sgc.service.mapper.ColaboradorMapper;
 
@@ -89,7 +96,29 @@ public class ColaboradorService {
 			throw new EntidadeEmUsoException("O colaborador de código " + colaboradorId + " está em uso");
 		}
 	}
+	
+	public List<CompetenciaColaboradorNivelMaximoDto> buscarColaboradorCompetenciaNivelMaximo() {
+		List<CompetenciaColaboradorNivelMaximoListDto> resultQuery = colaboradorRepository.buscarColaboradorCompetenciaNivelMaximo();
+		Map<Integer, CompetenciaColaboradorNivelMaximoDto> map = new HashMap<>();
+		
+		for(CompetenciaColaboradorNivelMaximoListDto itemResult : resultQuery) {
+			CompetenciaColaboradorNivelMaximoDto competenciaKey = map.computeIfAbsent(itemResult.getCompetenciaId(), (k) -> {
+				CompetenciaColaboradorNivelMaximoDto competencia = new CompetenciaColaboradorNivelMaximoDto();
+				competencia.setCompetencia(new CompetenciaResumoDto());
+				competencia.getCompetencia().setId(itemResult.getCompetenciaId());
+				competencia.getCompetencia().setNome(itemResult.getCompetenciaNome());
+				return competencia;
+			});
+			ColaboradorResumoDto colaborador = new ColaboradorResumoDto();
+			colaborador.setId(itemResult.getColaboradorId());
+			colaborador.setNome(itemResult.getColaboradorNome());
+			colaborador.setSobrenome(itemResult.getColaboradorSobrenome());
+			competenciaKey.getColaboradores().add(colaborador);
+		}
+		return new ArrayList<>(map.values());
+	}
 
+	@Transactional
 	public Colaborador buscarOuFalhar(Integer colaboradorId) {
 		return colaboradorRepository.findById(colaboradorId).orElseThrow(() -> new EntidadeNaoEncontradaException(
 				"Não existe um cadastro de colaborador com código " + colaboradorId));

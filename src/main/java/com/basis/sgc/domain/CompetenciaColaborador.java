@@ -10,8 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
 
-import com.basis.sgc.service.dto.Nivel;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
