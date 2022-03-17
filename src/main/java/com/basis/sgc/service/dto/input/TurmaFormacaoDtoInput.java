@@ -15,22 +15,16 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TurmaFormacaoDtoInput {
-
 	@NotBlank
 	private String nome;
-	
 	@NotBlank
 	private String descricao;
-
 	@NotNull
 	private LocalDateTime dataInicio;
-	
 	@NotNull
 	private LocalDateTime dataTermino;
-	
 	@NotNull
 	private Integer statusId;
-	
 	@Valid
 	@NotEmpty(message = "Deve ser informado ao menos uma competencia e um colaborador")
 	private Set<CompetenciaColaboradorDtoIdInput> competenciasColaboradores = new HashSet<>();

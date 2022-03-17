@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.basis.sgc.service.dto.CompetenciaColaboradorNivelMaximoDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -57,4 +58,8 @@ public class CompetenciaController {
 		competenciaService.excluir(competenciaId);
 	}
 
+	@GetMapping(params = "colaboradores=nivel-maximo")
+	public ResponseEntity<List<CompetenciaColaboradorNivelMaximoDto>> buscarColaboradoresNivelMaximo() {
+		return ResponseEntity.ok(competenciaService.buscarColaboradoresNivelMaximo());
+	}
 }

@@ -1,5 +1,6 @@
 package com.basis.sgc.domain;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -25,7 +26,7 @@ import lombok.Setter;
 @EqualsAndHashCode(of = "id")
 @Getter
 @Setter
-public class TurmaFormacao {
+public class TurmaFormacao implements Serializable {
 
 	@Id
 	@SequenceGenerator(name = "seq_id_turma_formacao", sequenceName = "seq_id_turma_formacao", allocationSize = 1)

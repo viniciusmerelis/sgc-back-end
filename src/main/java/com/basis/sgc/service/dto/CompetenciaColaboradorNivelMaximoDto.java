@@ -1,5 +1,6 @@
 package com.basis.sgc.service.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Getter;
@@ -9,5 +10,5 @@ import lombok.Setter;
 @Setter
 public class CompetenciaColaboradorNivelMaximoDto {
 	private CompetenciaResumoDto competencia;
-	private List<ColaboradorResumoDto> colaboradores;
+	private List<ColaboradorResumoDto> colaboradores = new ArrayList<>();
 }

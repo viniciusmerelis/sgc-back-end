@@ -96,27 +96,6 @@ public class ColaboradorService {
 			throw new EntidadeEmUsoException("O colaborador de código " + colaboradorId + " está em uso");
 		}
 	}
-	
-	public List<CompetenciaColaboradorNivelMaximoDto> buscarColaboradorCompetenciaNivelMaximo() {
-		List<CompetenciaColaboradorNivelMaximoListDto> resultQuery = colaboradorRepository.buscarColaboradorCompetenciaNivelMaximo();
-		Map<Integer, CompetenciaColaboradorNivelMaximoDto> map = new HashMap<>();
-		
-		for(CompetenciaColaboradorNivelMaximoListDto itemResult : resultQuery) {
-			CompetenciaColaboradorNivelMaximoDto competenciaKey = map.computeIfAbsent(itemResult.getCompetenciaId(), (k) -> {
-				CompetenciaColaboradorNivelMaximoDto competencia = new CompetenciaColaboradorNivelMaximoDto();
-				competencia.setCompetencia(new CompetenciaResumoDto());
-				competencia.getCompetencia().setId(itemResult.getCompetenciaId());
-				competencia.getCompetencia().setNome(itemResult.getCompetenciaNome());
-				return competencia;
-			});
-			ColaboradorResumoDto colaborador = new ColaboradorResumoDto();
-			colaborador.setId(itemResult.getColaboradorId());
-			colaborador.setNome(itemResult.getColaboradorNome());
-			colaborador.setSobrenome(itemResult.getColaboradorSobrenome());
-			competenciaKey.getColaboradores().add(colaborador);
-		}
-		return new ArrayList<>(map.values());
-	}
 
 	@Transactional
 	public Colaborador buscarOuFalhar(Integer colaboradorId) {
