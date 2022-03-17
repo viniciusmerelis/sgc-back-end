@@ -10,7 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ColaboradorDto {
-
 	private Integer id;
 	private String nome;
 	private String sobrenome;
@@ -19,5 +18,5 @@ public class ColaboradorDto {
 	private LocalDateTime dataNascimento;
 	private LocalDateTime dataAdmissao;
 	private SenioridadeDto senioridade;
-	private Set<CompetenciaResumoDto> competencias = new HashSet<>();
+	private Set<CompetenciaNivelDto> competencias = new HashSet<>();
 }

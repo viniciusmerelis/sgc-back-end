@@ -9,13 +9,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CompetenciaDtoInput {
-
 	@NotBlank
 	private String nome;
-	
 	@NotBlank
 	private String descricao;
-	
 	@NotNull
 	private Integer categoriaId;
 }

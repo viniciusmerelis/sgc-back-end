@@ -16,29 +16,21 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ColaboradorDtoInput {
-	
 	@NotBlank
 	private String nome;
-	
 	@NotBlank
 	private String sobrenome;
-	
 	@NotBlank
 	private String cpf;
-	
 	@NotBlank
 	@Email
 	private String email;
-	
 	@NotNull
 	private LocalDateTime dataNascimento;
-	
 	@NotNull
 	private LocalDateTime dataAdmissao;
-	
 	@NotNull
 	private Integer senioridadeId;
-	
 	@Valid
 	@NotEmpty(message = "É necessário informar ao menos uma compentecia")
 	private Set<CompetenciaDtoIdInput> competencias = new HashSet<>();

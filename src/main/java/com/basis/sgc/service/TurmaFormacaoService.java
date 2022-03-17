@@ -75,6 +75,7 @@ public class TurmaFormacaoService {
 					.orElseThrow(() -> new RegraNegocioException("Não existe uma competencia com código " + item.getId().getCompetenciaId()));
 			Colaborador colaborador = colaboradorRepository.findById(item.getId().getColaboradorId())
 					.orElseThrow(() -> new RegraNegocioException("Não existe um colaborador com código " + item.getId().getColaboradorId()));
+			item.getId().setTurmaId(turma.getId());
 			item.setTurma(turma);
 			item.setCompetencia(competencia);
 			item.setColaborador(colaborador);

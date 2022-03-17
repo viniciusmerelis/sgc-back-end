@@ -42,6 +42,11 @@
 			<column name="colaborador_id" value="2"/>
 			<column name="nivel" value="2"/>
 		</insert>
+		<insert tableName="competencia_colaborador">
+			<column name="competencia_id" value="4"/>
+			<column name="colaborador_id" value="4"/>
+			<column name="nivel" value="2"/>
+		</insert>
 	</changeSet>
                    
 </databaseChangeLog>                   

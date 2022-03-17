@@ -6,14 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.basis.sgc.service.ColaboradorService;
 import com.basis.sgc.service.dto.ColaboradorDto;
@@ -55,10 +48,5 @@ public class ColaboradorController {
 	public ResponseEntity<?> excluir(@PathVariable Integer colaboradorId) {
 		colaboradorService.excluir(colaboradorId);
 		return ResponseEntity.noContent().build();
-	}
-	
-	@GetMapping("/nivel-maximo")
-	public ResponseEntity<List<CompetenciaColaboradorNivelMaximoDto>> buscarColaboradoresCompetenciaNivelMaximo() {
-		return ResponseEntity.ok(colaboradorService.buscarColaboradorCompetenciaNivelMaximo());
 	}
 }

@@ -14,12 +14,14 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "competencia")
 @EqualsAndHashCode(of = "id")
 @Getter
 @Setter
-public class Competencia {
+public class Competencia implements Serializable {
 
 	@Id
 	@SequenceGenerator(name = "seq_id_competencia", sequenceName = "seq_id_competencia", allocationSize = 1)

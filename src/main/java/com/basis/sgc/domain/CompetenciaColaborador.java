@@ -14,12 +14,14 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "competencia_colaborador")
 @EqualsAndHashCode(of = "id")
 @Getter
 @Setter
-public class CompetenciaColaborador {
+public class CompetenciaColaborador implements Serializable {
 
 	@EmbeddedId
 	private CompetenciaColaboradorId id;

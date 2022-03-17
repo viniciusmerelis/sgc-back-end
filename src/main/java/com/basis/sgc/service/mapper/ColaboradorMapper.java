@@ -2,6 +2,7 @@ package com.basis.sgc.service.mapper;
 
 import java.util.List;
 
+import com.basis.sgc.service.dto.CompetenciaNivelDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -30,10 +31,11 @@ public interface ColaboradorMapper {
 	@Mapping(source = "id", target = "id.competenciaId")
 	@Mapping(target = "competencia", ignore = true)
 	@Mapping(target = "colaborador", ignore = true)
-	@Mapping(target = "nivel", ignore = true)
+	@Mapping(source = "nivel", target = "nivel")
 	CompetenciaColaborador toCompetenciaColaboradorEntity(CompetenciaDtoIdInput competenciaDtoIdInput);
 	
 	@Mapping(source = "id.competenciaId", target = "id")
 	@Mapping(source =  "competencia.nome", target = "nome")
-	CompetenciaResumoDto toCompetenciaResumoDto(CompetenciaColaborador competenciaColaborador);
+	@Mapping(source = "nivel", target = "nivel")
+	CompetenciaNivelDto toCompetenciaNivelDto(CompetenciaColaborador competenciaColaborador);
 }
