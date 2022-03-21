@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CompetenciaDtoIdInput {
+public class CompetenciaNivelDtoIdInput {
 	@NotNull
 	private Integer id;
 	@NotNull
