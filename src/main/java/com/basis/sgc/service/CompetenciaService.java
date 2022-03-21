@@ -42,7 +42,7 @@ public class CompetenciaService {
 	@Transactional
 	public CompetenciaDto buscarPeloId(Integer competenciaId) {
 		return competenciaMapper.toDto(
-				competenciaRepository.findById(competenciaId).orElseThrow(() -> new RuntimeException("Deu ruim")));
+				competenciaRepository.findById(competenciaId).orElseThrow(() -> new RegraNegocioException("Não existe competencia com código " + competenciaId)));
 	}
 
 	@Transactional
@@ -79,7 +79,7 @@ public class CompetenciaService {
 	}
 
 	public List<CompetenciaColaboradorNivelMaximoDto> buscarColaboradoresNivelMaximo() {
-		List<CompetenciaColaboradorNivelMaximoListDto> resultQuery = colaboradorRepository.buscarColaboradorCompetenciaNivelMaximo();
+		List<CompetenciaColaboradorNivelMaximoListDto> resultQuery = competenciaRepository.buscarCompetenciasEColaboradoresNivelMaximo();
 		Map<Integer, CompetenciaColaboradorNivelMaximoDto> map = new HashMap<>();
 
 		for(CompetenciaColaboradorNivelMaximoListDto itemResult : resultQuery) {
