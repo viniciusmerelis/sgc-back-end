@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import com.basis.sgc.service.dto.SelectItemDto;
 import org.springframework.stereotype.Service;
 
 import com.basis.sgc.domain.Categoria;
@@ -22,8 +23,8 @@ public class CategoriaService {
 	private CategoriaMapper categoriaMapper;
 	
 	@Transactional
-	public List<CategoriaDto> listarTodas() {
-		return categoriaMapper.toDto(categoriaRepository.findAll());
+	public List<SelectItemDto> listarCategoriasSelectItem() {
+		return categoriaRepository.buscarCategoriasSelectItem();
 	}
 	
 	@Transactional

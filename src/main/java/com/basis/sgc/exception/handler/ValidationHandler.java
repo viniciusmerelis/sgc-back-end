@@ -34,11 +34,10 @@ public class ValidationHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, problemDetail, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
-
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-                                                                           HttpHeaders headers, HttpStatus status,
-                                                                           WebRequest request) {
+                                                                  HttpHeaders headers, HttpStatus status,
+                                                                  WebRequest request) {
 
         ProblemDetail problemDetail = new ProblemDetail();
         ProblemType problemType = ProblemType.DADOS_INVALIDOS;
@@ -47,7 +46,6 @@ public class ValidationHandler extends ResponseEntityExceptionHandler {
         problemDetail.setDetail(ex.getMessage());
         problemDetail.setPath(problemType.getUri());
         problemDetail.setTimestamp(LocalDateTime.now());
-
         List<Propriedades> propriedades = ex.getBindingResult().getFieldErrors().stream()
                 .map(fieldError -> {
                     Propriedades field = new Propriedades();
@@ -56,9 +54,7 @@ public class ValidationHandler extends ResponseEntityExceptionHandler {
                     return field;
                 })
                 .collect(Collectors.toList());
-
         problemDetail.setPropriedades(propriedades);
-
         return handleExceptionInternal(ex, problemDetail, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 }

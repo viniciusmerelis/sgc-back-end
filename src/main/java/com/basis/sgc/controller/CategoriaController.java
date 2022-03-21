@@ -2,6 +2,7 @@ package com.basis.sgc.controller;
 
 import java.util.List;
 
+import com.basis.sgc.service.dto.SelectItemDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,10 +22,10 @@ public class CategoriaController {
 	private CategoriaService categoriaService;
 	
 	@GetMapping
-	public ResponseEntity<List<CategoriaDto>> listarTodas() {
-		return ResponseEntity.ok(categoriaService.listarTodas());
+	public ResponseEntity<List<SelectItemDto>> listarTodas() {
+		return ResponseEntity.ok(categoriaService.listarCategoriasSelectItem());
 	}
-	
+
 	@GetMapping("/{categoriaId}")
 	public ResponseEntity<CategoriaDto> buscarPeloId(@PathVariable Integer categoriaId) {
 		return ResponseEntity.ok(categoriaService.buscarPeloId(categoriaId));
