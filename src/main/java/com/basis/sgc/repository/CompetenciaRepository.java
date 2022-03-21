@@ -14,4 +14,7 @@ public interface CompetenciaRepository extends JpaRepository<Competencia, Intege
 
     @Query(value = "select new com.basis.sgc.service.dto.CompetenciaColaboradorNivelMaximoListDto(cc.id.competenciaId, cc.competencia.nome, cc.id.colaboradorId, cc.colaborador.nome, cc.colaborador.sobrenome) from CompetenciaColaborador cc where cc.nivel=2")
     List<CompetenciaColaboradorNivelMaximoListDto> buscarCompetenciasEColaboradoresNivelMaximo();
+
+//    @Query(value = "select new com.basis.sgc.service.dto.SelectItem() from Competencia c where c.categoriaId = :categoriaId")
+//    SelectItemDto buscarCategoriaDaCompetencia(@Param("categoriaId") Integer categoriaId);
 }

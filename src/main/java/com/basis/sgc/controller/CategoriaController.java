@@ -2,7 +2,6 @@ package com.basis.sgc.controller;
 
 import java.util.List;
 
-import com.basis.sgc.service.dto.SelectItemDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,8 +21,8 @@ public class CategoriaController {
 	private CategoriaService categoriaService;
 	
 	@GetMapping
-	public ResponseEntity<List<SelectItemDto>> listarTodas() {
-		return ResponseEntity.ok(categoriaService.listarCategoriasSelectItem());
+	public ResponseEntity<List<CategoriaDto>> listarTodas() {
+		return ResponseEntity.ok(categoriaService.listarCategorias());
 	}
 
 	@GetMapping("/{categoriaId}")
