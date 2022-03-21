@@ -20,9 +20,9 @@ public class CategoriaService {
 
 	private CategoriaRepository categoriaRepository;
 	private CategoriaMapper categoriaMapper;
-	
+
 	@Transactional
-	public List<CategoriaDto> listarTodas() {
+	public List<CategoriaDto> listarCategorias() {
 		return categoriaMapper.toDto(categoriaRepository.findAll());
 	}
 	

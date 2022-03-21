@@ -22,9 +22,9 @@ public class CategoriaController {
 	
 	@GetMapping
 	public ResponseEntity<List<CategoriaDto>> listarTodas() {
-		return ResponseEntity.ok(categoriaService.listarTodas());
+		return ResponseEntity.ok(categoriaService.listarCategorias());
 	}
-	
+
 	@GetMapping("/{categoriaId}")
 	public ResponseEntity<CategoriaDto> buscarPeloId(@PathVariable Integer categoriaId) {
 		return ResponseEntity.ok(categoriaService.buscarPeloId(categoriaId));
