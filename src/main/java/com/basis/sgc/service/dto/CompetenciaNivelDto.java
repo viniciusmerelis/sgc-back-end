@@ -1,5 +1,7 @@
 package com.basis.sgc.service.dto;
 
+import com.basis.sgc.domain.Nivel;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,5 +10,5 @@ import lombok.Setter;
 public class CompetenciaNivelDto {
     private Integer id;
     private String nome;
-    private NivelDto nivel;
+    private Nivel nivel;
 }

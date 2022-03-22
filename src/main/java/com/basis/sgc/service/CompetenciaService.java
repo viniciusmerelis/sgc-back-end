@@ -7,8 +7,6 @@ import java.util.Map;
 
 import javax.transaction.Transactional;
 
-import com.basis.sgc.repository.ColaboradorRepository;
-import com.basis.sgc.service.dto.*;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -20,6 +18,11 @@ import com.basis.sgc.exception.EntidadeNaoEncontradaException;
 import com.basis.sgc.exception.RegraNegocioException;
 import com.basis.sgc.repository.CategoriaRepository;
 import com.basis.sgc.repository.CompetenciaRepository;
+import com.basis.sgc.service.dto.ColaboradorResumoDto;
+import com.basis.sgc.service.dto.CompetenciaColaboradorNivelMaximoDto;
+import com.basis.sgc.service.dto.CompetenciaColaboradorNivelMaximoListDto;
+import com.basis.sgc.service.dto.CompetenciaDto;
+import com.basis.sgc.service.dto.CompetenciaResumoDto;
 import com.basis.sgc.service.dto.input.CompetenciaDtoInput;
 import com.basis.sgc.service.mapper.CompetenciaMapper;
 
@@ -32,7 +35,6 @@ public class CompetenciaService {
 	private CompetenciaRepository competenciaRepository;
 	private CompetenciaMapper competenciaMapper;
 	private CategoriaRepository categoriaRepository;
-	private ColaboradorRepository colaboradorRepository;
 
 	@Transactional
 	public List<CompetenciaDto> listarTodas() {

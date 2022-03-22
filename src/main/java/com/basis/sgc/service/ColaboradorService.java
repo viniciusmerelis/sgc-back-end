@@ -1,9 +1,6 @@
 package com.basis.sgc.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -21,10 +18,6 @@ import com.basis.sgc.repository.ColaboradorRepository;
 import com.basis.sgc.repository.CompetenciaRepository;
 import com.basis.sgc.repository.SenioridadeRepository;
 import com.basis.sgc.service.dto.ColaboradorDto;
-import com.basis.sgc.service.dto.ColaboradorResumoDto;
-import com.basis.sgc.service.dto.CompetenciaColaboradorNivelMaximoDto;
-import com.basis.sgc.service.dto.CompetenciaColaboradorNivelMaximoListDto;
-import com.basis.sgc.service.dto.CompetenciaResumoDto;
 import com.basis.sgc.service.dto.input.ColaboradorDtoInput;
 import com.basis.sgc.service.mapper.ColaboradorMapper;
 
@@ -79,6 +72,7 @@ public class ColaboradorService {
 					.orElseThrow(() -> new RegraNegocioException(
 							"Não existe um cadastro de competencia com código " + item.getId().getCompetenciaId()));
 			item.getId().setColaboradorId(colaborador.getId());
+			item.setColaborador(colaborador);
 			item.setCompetencia(competencia);
 		});
 		return colaboradorMapper.toDto(colaboradorRepository.save(colaborador));
