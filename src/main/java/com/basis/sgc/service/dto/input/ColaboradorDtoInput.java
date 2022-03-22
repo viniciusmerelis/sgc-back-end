@@ -33,5 +33,5 @@ public class ColaboradorDtoInput {
 	private Integer senioridadeId;
 	@Valid
 	@NotEmpty(message = "É necessário informar ao menos uma compentecia")
-	private Set<CompetenciaDtoIdInput> competencias = new HashSet<>();
+	private Set<CompetenciaNivelDtoIdInput> competencias = new HashSet<>();
 }

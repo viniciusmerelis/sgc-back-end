@@ -2,16 +2,15 @@ package com.basis.sgc.service.mapper;
 
 import java.util.List;
 
-import com.basis.sgc.service.dto.CompetenciaNivelDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import com.basis.sgc.domain.Colaborador;
 import com.basis.sgc.domain.CompetenciaColaborador;
 import com.basis.sgc.service.dto.ColaboradorDto;
-import com.basis.sgc.service.dto.CompetenciaResumoDto;
+import com.basis.sgc.service.dto.CompetenciaNivelDto;
 import com.basis.sgc.service.dto.input.ColaboradorDtoInput;
-import com.basis.sgc.service.dto.input.CompetenciaDtoIdInput;
+import com.basis.sgc.service.dto.input.CompetenciaNivelDtoIdInput;
 
 @Mapper(componentModel = "spring")
 public interface ColaboradorMapper {
@@ -32,7 +31,7 @@ public interface ColaboradorMapper {
 	@Mapping(target = "competencia", ignore = true)
 	@Mapping(target = "colaborador", ignore = true)
 	@Mapping(source = "nivel", target = "nivel")
-	CompetenciaColaborador toCompetenciaColaboradorEntity(CompetenciaDtoIdInput competenciaDtoIdInput);
+	CompetenciaColaborador toCompetenciaColaboradorEntity(CompetenciaNivelDtoIdInput competenciaDtoIdInput);
 	
 	@Mapping(source = "id.competenciaId", target = "id")
 	@Mapping(source =  "competencia.nome", target = "nome")

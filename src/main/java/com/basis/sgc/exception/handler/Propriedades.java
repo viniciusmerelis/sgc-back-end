@@ -1,6 +1,5 @@
 package com.basis.sgc.exception.handler;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
