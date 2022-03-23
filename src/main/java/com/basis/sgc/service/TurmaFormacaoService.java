@@ -4,13 +4,10 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import com.basis.sgc.domain.*;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import com.basis.sgc.domain.Colaborador;
-import com.basis.sgc.domain.Competencia;
-import com.basis.sgc.domain.Status;
-import com.basis.sgc.domain.TurmaFormacao;
 import com.basis.sgc.exception.EntidadeNaoEncontradaException;
 import com.basis.sgc.exception.RegraNegocioException;
 import com.basis.sgc.repository.ColaboradorRepository;
@@ -92,12 +89,23 @@ public class TurmaFormacaoService {
 			throw new EntidadeNaoEncontradaException("Não existe um cadastro de turma formação com código " + turmaId);
 		}
 	}
-	
-	
 
 	@Transactional
 	public TurmaFormacao buscarOuFalhar(Integer turmaId) {
 		return turmaFormacaoRepository.findById(turmaId).orElseThrow(() -> new EntidadeNaoEncontradaException(
 				"Não existe um cadastro de turma formação com código" + turmaId));
+	}
+
+	@Transactional
+	public void associarCompetenciaColaborador(Integer turmaId, Integer competenciaId, Integer colaboradorId) {
+		TurmaFormacao turma = buscarOuFalhar(turmaId);
+		TurmaCompetenciaColaborador turmaCompetenciaColaborador = new TurmaCompetenciaColaborador();
+		Competencia competencia = competenciaRepository.findById(competenciaId)
+				.orElseThrow(() -> new RegraNegocioException("Não existe uma competencia com código " + competenciaId));
+		Colaborador colaborador = colaboradorRepository.findById(colaboradorId)
+				.orElseThrow(() -> new RegraNegocioException("Não existe um colaborador com código " + colaboradorId));
+		turmaCompetenciaColaborador.setCompetencia(competencia);
+		turmaCompetenciaColaborador.setColaborador(colaborador);
+//		turma.adicionarCompetenciasEColaboradores(turmaCompetenciaColaborador);
 	}
 }
