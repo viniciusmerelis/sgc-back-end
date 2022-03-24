@@ -24,88 +24,80 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class TurmaFormacaoService {
 
-	private TurmaFormacaoRepository turmaFormacaoRepository;
-	private TurmaFormacaoMapper turmaFormacaoMapper;
-	private StatusRepository statusRepository;
-	private CompetenciaRepository competenciaRepository;
-	private ColaboradorRepository colaboradorRepository;
+    private static final String MSG_TURMA_NAO_ENCONTRADA = "Não existe um cadastro de turma formação com código ";
+    private static final String MSG_ERRO_EXCLUIR_TURMA_INICIADA = "Esta turma não pode ser excluida pois está em andamento.";
+    private static final String MSG_STATUS_NAO_ENCONTRADO = "Não existe um status com código ";
+    private static final String MSG_COMPETENCIA_NAO_ENCONTRADA = "Não existe uma competencia com código ";
+    private static final String MSG_COLABORADOR_NAO_ENCONTRADO = "Não existe um colaborador com código ";
 
-	@Transactional
-	public List<TurmaFormacaoDto> listarTodas() {
-		return turmaFormacaoMapper.toDto(turmaFormacaoRepository.findAll());
-	}
+    private TurmaFormacaoRepository turmaFormacaoRepository;
+    private TurmaFormacaoMapper turmaFormacaoMapper;
+    private StatusRepository statusRepository;
+    private CompetenciaRepository competenciaRepository;
+    private ColaboradorRepository colaboradorRepository;
 
-	@Transactional
-	public TurmaFormacaoDto buscarPeloId(Integer turmaId) {
-		return turmaFormacaoMapper.toDto(buscarOuFalhar(turmaId));
-	}
-	
-	@Transactional
-	public TurmaFormacaoDto salvar(TurmaFormacaoDtoInput turmaFormacaoDtoInput) {
-		TurmaFormacao turma = turmaFormacaoMapper.toEntity(turmaFormacaoDtoInput);
-		Integer statusId = turma.getStatus().getId();
-		Status status = statusRepository.findById(statusId)
-				.orElseThrow(() -> new RegraNegocioException("Não existe um status com código " + statusId));
-		turma.setStatus(status);
-		turma.getCompetenciasColaboradores().forEach(item -> {
-			Competencia competencia = competenciaRepository.findById(item.getId().getCompetenciaId())
-					.orElseThrow(() -> new RegraNegocioException("Não existe uma competencia com código " + item.getId().getCompetenciaId()));
-			Colaborador colaborador = colaboradorRepository.findById(item.getId().getColaboradorId())
-					.orElseThrow(() -> new RegraNegocioException("Não existe um colaborador com código " + item.getId().getColaboradorId()));
-			item.setTurma(turma);
-			item.setCompetencia(competencia);
-			item.setColaborador(colaborador);
-		});
-		return turmaFormacaoMapper.toDto(turmaFormacaoRepository.save(turma));
-	}
-	
-	@Transactional
-	public TurmaFormacaoDto atualizar(Integer turmaId, TurmaFormacaoDtoInput turmaFormacaoDtoInput) {
-		TurmaFormacao turma = turmaFormacaoMapper.toEntity(turmaFormacaoDtoInput);
-		turma.setId(turmaId);
-		Integer statusId = turma.getStatus().getId();
-		Status status = statusRepository.findById(statusId)
-				.orElseThrow(() -> new RegraNegocioException("Não existe um status com código " + statusId));
-		turma.setStatus(status);
-		turma.getCompetenciasColaboradores().forEach(item -> {
-			Competencia competencia = competenciaRepository.findById(item.getId().getCompetenciaId())
-					.orElseThrow(() -> new RegraNegocioException("Não existe uma competencia com código " + item.getId().getCompetenciaId()));
-			Colaborador colaborador = colaboradorRepository.findById(item.getId().getColaboradorId())
-					.orElseThrow(() -> new RegraNegocioException("Não existe um colaborador com código " + item.getId().getColaboradorId()));
-			item.getId().setTurmaId(turma.getId());
-			item.setTurma(turma);
-			item.setCompetencia(competencia);
-			item.setColaborador(colaborador);
-		});
-		return turmaFormacaoMapper.toDto(turmaFormacaoRepository.save(turma));
-	}
-	
-	@Transactional
-	public void excluir(Integer turmaId) {
-		try {
-			turmaFormacaoRepository.deleteById(turmaId);
-			turmaFormacaoRepository.flush();
-		} catch (EmptyResultDataAccessException e) {
-			throw new EntidadeNaoEncontradaException("Não existe um cadastro de turma formação com código " + turmaId);
-		}
-	}
+    @Transactional
+    public List<TurmaFormacaoDto> listarTodas() {
+        return turmaFormacaoMapper.toDto(turmaFormacaoRepository.findAll());
+    }
 
-	@Transactional
-	public TurmaFormacao buscarOuFalhar(Integer turmaId) {
-		return turmaFormacaoRepository.findById(turmaId).orElseThrow(() -> new EntidadeNaoEncontradaException(
-				"Não existe um cadastro de turma formação com código" + turmaId));
-	}
+    @Transactional
+    public TurmaFormacaoDto buscarPeloId(Integer turmaId) {
+        return turmaFormacaoMapper.toDto(buscarOuFalhar(turmaId));
+    }
 
-	@Transactional
-	public void associarCompetenciaColaborador(Integer turmaId, Integer competenciaId, Integer colaboradorId) {
-		TurmaFormacao turma = buscarOuFalhar(turmaId);
-		TurmaCompetenciaColaborador turmaCompetenciaColaborador = new TurmaCompetenciaColaborador();
-		Competencia competencia = competenciaRepository.findById(competenciaId)
-				.orElseThrow(() -> new RegraNegocioException("Não existe uma competencia com código " + competenciaId));
-		Colaborador colaborador = colaboradorRepository.findById(colaboradorId)
-				.orElseThrow(() -> new RegraNegocioException("Não existe um colaborador com código " + colaboradorId));
-		turmaCompetenciaColaborador.setCompetencia(competencia);
-		turmaCompetenciaColaborador.setColaborador(colaborador);
-//		turma.adicionarCompetenciasEColaboradores(turmaCompetenciaColaborador);
-	}
+    @Transactional
+    public TurmaFormacaoDto salvar(TurmaFormacaoDtoInput turmaFormacaoDtoInput) {
+        TurmaFormacao turma = turmaFormacaoMapper.toEntity(turmaFormacaoDtoInput);
+        Integer statusId = turma.getStatus().getId();
+        Status status = statusRepository.findById(statusId)
+                .orElseThrow(() -> new RegraNegocioException(MSG_STATUS_NAO_ENCONTRADO + statusId));
+        turma.setStatus(status);
+        turma.getCompetenciasColaboradores().forEach(item -> {
+            Competencia competencia = competenciaRepository.findById(item.getId().getCompetenciaId())
+                    .orElseThrow(() -> new RegraNegocioException(MSG_COMPETENCIA_NAO_ENCONTRADA + item.getId().getCompetenciaId()));
+            Colaborador colaborador = colaboradorRepository.findById(item.getId().getColaboradorId())
+                    .orElseThrow(() -> new RegraNegocioException(MSG_COLABORADOR_NAO_ENCONTRADO + item.getId().getColaboradorId()));
+            item.setTurma(turma);
+            item.setCompetencia(competencia);
+            item.setColaborador(colaborador);
+        });
+        return turmaFormacaoMapper.toDto(turmaFormacaoRepository.save(turma));
+    }
+
+    @Transactional
+    public TurmaFormacaoDto atualizar(Integer turmaId, TurmaFormacaoDtoInput turmaFormacaoDtoInput) {
+        TurmaFormacao turma = turmaFormacaoMapper.toEntity(turmaFormacaoDtoInput);
+        turma.setId(turmaId);
+        Integer statusId = turma.getStatus().getId();
+        Status status = statusRepository.findById(statusId)
+                .orElseThrow(() -> new RegraNegocioException(MSG_STATUS_NAO_ENCONTRADO + statusId));
+        turma.setStatus(status);
+        turma.getCompetenciasColaboradores().forEach(item -> {
+            Competencia competencia = competenciaRepository.findById(item.getId().getCompetenciaId())
+                    .orElseThrow(() -> new RegraNegocioException(MSG_COMPETENCIA_NAO_ENCONTRADA + item.getId().getCompetenciaId()));
+            Colaborador colaborador = colaboradorRepository.findById(item.getId().getColaboradorId())
+                    .orElseThrow(() -> new RegraNegocioException(MSG_COLABORADOR_NAO_ENCONTRADO + item.getId().getColaboradorId()));
+            item.getId().setTurmaId(turma.getId());
+            item.setTurma(turma);
+            item.setCompetencia(competencia);
+            item.setColaborador(colaborador);
+        });
+        return turmaFormacaoMapper.toDto(turmaFormacaoRepository.save(turma));
+    }
+
+    @Transactional
+    public void excluir(Integer turmaId) {
+        TurmaFormacao turma = buscarOuFalhar(turmaId);
+        if (turma.getStatus().getNome().equals("Iniciada")) {
+            throw new RegraNegocioException(MSG_ERRO_EXCLUIR_TURMA_INICIADA);
+        }
+        turmaFormacaoRepository.deleteById(turmaId);
+    }
+
+    @Transactional
+    public TurmaFormacao buscarOuFalhar(Integer turmaId) {
+        return turmaFormacaoRepository.findById(turmaId).orElseThrow(() -> new EntidadeNaoEncontradaException(
+                MSG_TURMA_NAO_ENCONTRADA + turmaId));
+    }
 }

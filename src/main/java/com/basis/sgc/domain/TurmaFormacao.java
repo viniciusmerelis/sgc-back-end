@@ -39,10 +39,7 @@ public class TurmaFormacao implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "status_id", nullable = false)
 	private Status status;
-	
-	@OneToMany
-	@JoinTable(name = "turma_competencia_colaborador",
-		joinColumns = @JoinColumn(name = "turma_id"),
-		inverseJoinColumns = {@JoinColumn(name = "competencia_id"), @JoinColumn(name = "colaborador_id")})
+
+	@OneToMany(mappedBy = "turma", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<TurmaCompetenciaColaborador> competenciasColaboradores = new HashSet<>();
 }
