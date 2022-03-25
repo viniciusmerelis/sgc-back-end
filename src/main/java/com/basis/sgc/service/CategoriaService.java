@@ -1,40 +1,37 @@
 package com.basis.sgc.service;
 
-import java.util.List;
-
-import javax.transaction.Transactional;
-
-import org.springframework.stereotype.Service;
-
 import com.basis.sgc.domain.Categoria;
 import com.basis.sgc.exception.EntidadeNaoEncontradaException;
 import com.basis.sgc.repository.CategoriaRepository;
 import com.basis.sgc.service.dto.CategoriaDto;
 import com.basis.sgc.service.mapper.CategoriaMapper;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
-import lombok.AllArgsConstructor;
+import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
+@Transactional
 public class CategoriaService {
 
-	private CategoriaRepository categoriaRepository;
-	private CategoriaMapper categoriaMapper;
+    private static final String MSG_CATEGORIA_NAO_ENCOTRADA = "Categoria de código %d não encontrada ";
 
-	@Transactional
-	public List<CategoriaDto> listarCategorias() {
-		return categoriaMapper.toDto(categoriaRepository.findAll());
-	}
-	
-	@Transactional
-	public CategoriaDto buscarPeloId(Integer categoriaId) {
-		return categoriaMapper.toDto(buscarOuFalhar(categoriaId));
-	}
-	
-	@Transactional
-	public Categoria buscarOuFalhar(Integer categoriaId) {
-		return categoriaRepository.findById(categoriaId)
-				.orElseThrow(() -> new EntidadeNaoEncontradaException(
-						String.format("Categoria de código %d não encontrada", categoriaId)));
-	}
+    private final CategoriaRepository categoriaRepository;
+    private final CategoriaMapper categoriaMapper;
+
+    public List<CategoriaDto> listar() {
+        return categoriaMapper.toDto(categoriaRepository.findAll());
+    }
+
+    public CategoriaDto buscarPorId(Integer categoriaId) {
+        return categoriaMapper.toDto(buscarOuFalhar(categoriaId));
+    }
+
+    public Categoria buscarOuFalhar(Integer categoriaId) {
+        return categoriaRepository.findById(categoriaId)
+                .orElseThrow(() -> new EntidadeNaoEncontradaException(
+                        String.format(MSG_CATEGORIA_NAO_ENCOTRADA, categoriaId)));
+    }
 }
