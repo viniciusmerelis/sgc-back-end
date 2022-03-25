@@ -1,65 +1,53 @@
 package com.basis.sgc.controller;
 
-import java.util.List;
-
-import javax.validation.Valid;
-
-import com.basis.sgc.service.dto.CompetenciaColaboradorNivelMaximoDto;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.basis.sgc.service.CompetenciaService;
+import com.basis.sgc.service.dto.CompetenciaColaboradorNivelMaximoDto;
 import com.basis.sgc.service.dto.CompetenciaDto;
 import com.basis.sgc.service.dto.input.CompetenciaDtoInput;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import lombok.AllArgsConstructor;
+import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/competencias")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CompetenciaController {
 
-	private CompetenciaService competenciaService;
+    private final CompetenciaService competenciaService;
 
-	@GetMapping
-	public ResponseEntity<List<CompetenciaDto>> listarTodas() {
-		return ResponseEntity.ok(competenciaService.listarTodas());
-	}
+    @GetMapping
+    public ResponseEntity<List<CompetenciaDto>> listarTodas() {
+        return new ResponseEntity<>(competenciaService.listar(), HttpStatus.OK);
+    }
 
-	@GetMapping("/{competenciaId}")
-	public ResponseEntity<CompetenciaDto> buscarPeloId(@PathVariable Integer competenciaId) {
-		return ResponseEntity.ok(competenciaService.buscarPeloId(competenciaId));
-	}
+    @GetMapping("/{competenciaId}")
+    public ResponseEntity<CompetenciaDto> buscarPeloId(@PathVariable Integer competenciaId) {
+        return new ResponseEntity<>(competenciaService.buscarPorId(competenciaId), HttpStatus.OK);
+    }
 
-	@PostMapping
-	public ResponseEntity<CompetenciaDto> salvar(@RequestBody @Valid CompetenciaDtoInput competenciaDtoInput) {
-		return ResponseEntity.status(HttpStatus.CREATED)
-				.body(competenciaService.salvar(competenciaDtoInput));
-	}
+    @PostMapping
+    public ResponseEntity<CompetenciaDto> salvar(@RequestBody @Valid CompetenciaDtoInput competenciaDtoInput) {
+        return new ResponseEntity<>(competenciaService.salvar(competenciaDtoInput), HttpStatus.CREATED);
+    }
 
-	@PutMapping("/{competenciaId}")
-	public ResponseEntity<CompetenciaDto> atualizar(@PathVariable Integer competenciaId,
-			@RequestBody @Valid CompetenciaDtoInput competenciaDtoInput) {		
-		return ResponseEntity.ok(competenciaService.atualizar(competenciaId, competenciaDtoInput));
-	}
-	
-	@DeleteMapping("/{competenciaId}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void excluir(@PathVariable Integer competenciaId) {
-		competenciaService.excluir(competenciaId);
-	}
+    @PutMapping("/{competenciaId}")
+    public ResponseEntity<CompetenciaDto> atualizar(@PathVariable Integer competenciaId,
+                                                    @RequestBody @Valid CompetenciaDtoInput competenciaDtoInput) {
+        return new ResponseEntity<>(competenciaService.atualizar(competenciaId, competenciaDtoInput), HttpStatus.OK);
+    }
 
-	@GetMapping(params = "colaboradores=nivel-maximo")
-	public ResponseEntity<List<CompetenciaColaboradorNivelMaximoDto>> buscarColaboradoresNivelMaximo() {
-		return ResponseEntity.ok(competenciaService.buscarColaboradoresNivelMaximo());
-	}
+    @DeleteMapping("/{competenciaId}")
+    public ResponseEntity<?> excluir(@PathVariable Integer competenciaId) {
+        competenciaService.excluir(competenciaId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(params = "colaboradores=nivel-maximo")
+    public ResponseEntity<List<CompetenciaColaboradorNivelMaximoDto>> buscarColaboradoresNivelMaximo() {
+        return new ResponseEntity<>(competenciaService.buscarColaboradoresNivelMaximo(), HttpStatus.OK);
+    }
 }

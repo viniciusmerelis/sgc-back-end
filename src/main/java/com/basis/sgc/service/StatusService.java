@@ -1,32 +1,36 @@
 package com.basis.sgc.service;
 
-import java.util.List;
-
-import javax.transaction.Transactional;
-
-import org.springframework.stereotype.Service;
-
+import com.basis.sgc.domain.Status;
+import com.basis.sgc.exception.EntidadeNaoEncontradaException;
 import com.basis.sgc.repository.StatusRepository;
 import com.basis.sgc.service.dto.StatusDto;
 import com.basis.sgc.service.mapper.StatusMapper;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
-import lombok.AllArgsConstructor;
+import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
+@Transactional
 public class StatusService {
 
-	private StatusRepository statusRepository;
-	private StatusMapper statusMapper;
-	
-	@Transactional
-	public List<StatusDto> listarTodas() {
-		return statusMapper.toDto(statusRepository.findAll());
-	}
-	
-	@Transactional
-	public StatusDto buscarPeloId(Integer statusId) {
-		return statusMapper.toDto(statusRepository.findById(statusId)
-				.orElseThrow(() -> new RuntimeException("Deu ruim")));
-	}
+    private static final String MSG_STATUS_NAO_ENCONTRADO = "Não existe um status com código ";
+
+    private final StatusRepository statusRepository;
+    private final StatusMapper statusMapper;
+
+    public List<StatusDto> listar() {
+        return statusMapper.toDto(statusRepository.findAll());
+    }
+
+    public StatusDto buscarPorId(Integer statusId) {
+        return statusMapper.toDto(buscarOuFalhar(statusId));
+    }
+
+    public Status buscarOuFalhar(Integer statusId) {
+        return statusRepository.findById(statusId)
+                .orElseThrow(() -> new EntidadeNaoEncontradaException(MSG_STATUS_NAO_ENCONTRADO));
+    }
 }

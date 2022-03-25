@@ -1,15 +1,13 @@
 package com.basis.sgc.service.dto;
 
-import com.basis.sgc.service.dto.view.TurmaFormacaoView;
-import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
-public class StatusDto {
-	@JsonView(TurmaFormacaoView.ResumoListagem.class)
-	private Integer id;
-	@JsonView(TurmaFormacaoView.ResumoListagem.class)
-	private String nome;
+public class StatusDto implements Serializable {
+    private Integer id;
+    private String nome;
 }
