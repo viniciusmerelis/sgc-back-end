@@ -36,13 +36,13 @@ public class CompetenciaService {
     }
 
     public CompetenciaDto buscarPorId(Integer competenciaId) {
-        return competenciaMapper.toDto(buscarOuFalhar(competenciaId));
+        return competenciaMapper.toDto(buscar(competenciaId));
     }
 
     public CompetenciaDto salvar(CompetenciaDtoInput competenciaDtoInput) {
         Competencia competencia = competenciaMapper.toEntity(competenciaDtoInput);
         Integer categoriaId = competencia.getCategoria().getId();
-        Categoria categoria = categoriaService.buscarOuFalhar(categoriaId);
+        Categoria categoria = categoriaService.buscar(categoriaId);
         competencia.setCategoria(categoria);
         return competenciaMapper.toDto(competenciaRepository.save(competencia));
     }
@@ -51,7 +51,7 @@ public class CompetenciaService {
         Competencia competencia = competenciaMapper.toEntity(competenciaDtoInput);
         competencia.setId(competenciaId);
         Integer categoriaId = competencia.getCategoria().getId();
-        Categoria categoria = categoriaService.buscarOuFalhar(categoriaId);
+        Categoria categoria = categoriaService.buscar(categoriaId);
         competencia.setCategoria(categoria);
         return competenciaMapper.toDto(competenciaRepository.save(competencia));
     }
@@ -67,7 +67,7 @@ public class CompetenciaService {
         }
     }
 
-    public Competencia buscarOuFalhar(Integer competenciaId) {
+    public Competencia buscar(Integer competenciaId) {
         return competenciaRepository.findById(competenciaId)
                 .orElseThrow(() -> new EntidadeNaoEncontradaException(MSG_COMPETENCIA_NAO_ENCONTRADA));
     }

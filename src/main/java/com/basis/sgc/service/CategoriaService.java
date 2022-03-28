@@ -26,10 +26,10 @@ public class CategoriaService {
     }
 
     public CategoriaDto buscarPorId(Integer categoriaId) {
-        return categoriaMapper.toDto(buscarOuFalhar(categoriaId));
+        return categoriaMapper.toDto(buscar(categoriaId));
     }
 
-    public Categoria buscarOuFalhar(Integer categoriaId) {
+    public Categoria buscar(Integer categoriaId) {
         return categoriaRepository.findById(categoriaId)
                 .orElseThrow(() -> new EntidadeNaoEncontradaException(
                         String.format(MSG_CATEGORIA_NAO_ENCOTRADA, categoriaId)));
