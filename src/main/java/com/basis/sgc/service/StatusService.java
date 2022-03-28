@@ -26,10 +26,10 @@ public class StatusService {
     }
 
     public StatusDto buscarPorId(Integer statusId) {
-        return statusMapper.toDto(buscarOuFalhar(statusId));
+        return statusMapper.toDto(buscar(statusId));
     }
 
-    public Status buscarOuFalhar(Integer statusId) {
+    public Status buscar(Integer statusId) {
         return statusRepository.findById(statusId)
                 .orElseThrow(() -> new EntidadeNaoEncontradaException(MSG_STATUS_NAO_ENCONTRADO));
     }

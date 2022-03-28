@@ -37,13 +37,13 @@ public class ColaboradorService {
     }
 
     public ColaboradorDto buscarPorId(Integer colaboradorId) {
-        return colaboradorMapper.toDto(buscarOuFalhar(colaboradorId));
+        return colaboradorMapper.toDto(buscar(colaboradorId));
     }
 
     public ColaboradorDto salvar(ColaboradorDtoInput colaboradorDtoInput) {
         Colaborador colaborador = colaboradorMapper.toEntity(colaboradorDtoInput);
         Integer senioridadeId = colaborador.getSenioridade().getId();
-        Senioridade senioridade = senioridadeService.buscarOuFalhar(senioridadeId);
+        Senioridade senioridade = senioridadeService.buscar(senioridadeId);
         colaborador.setSenioridade(senioridade);
         colaborador.setCompetencias(adicionarCompetencias(colaborador));
         return colaboradorMapper.toDto(colaboradorRepository.save(colaborador));
@@ -53,7 +53,7 @@ public class ColaboradorService {
         Colaborador colaborador = colaboradorMapper.toEntity(colaboradorDtoInput);
         colaborador.setId(colaboradorId);
         Integer senioridadeId = colaborador.getSenioridade().getId();
-        Senioridade senioridade = senioridadeService.buscarOuFalhar(senioridadeId);
+        Senioridade senioridade = senioridadeService.buscar(senioridadeId);
         colaborador.setSenioridade(senioridade);
         colaborador.setCompetencias(adicionarCompetencias(colaborador));
         return colaboradorMapper.toDto(colaboradorRepository.save(colaborador));
@@ -70,14 +70,14 @@ public class ColaboradorService {
         }
     }
 
-    public Colaborador buscarOuFalhar(Integer colaboradorId) {
+    public Colaborador buscar(Integer colaboradorId) {
         return colaboradorRepository.findById(colaboradorId).orElseThrow(() -> new EntidadeNaoEncontradaException(
                 MSG_COLABORADOR_NAO_ENCONTRADO));
     }
 
     private Set<CompetenciaColaborador> adicionarCompetencias(Colaborador colaborador) {
         colaborador.getCompetencias().forEach(item -> {
-            Competencia competencia = competenciaService.buscarOuFalhar(item.getId().getCompetenciaId());
+            Competencia competencia = competenciaService.buscar(item.getId().getCompetenciaId());
             if (colaborador.getId() != null) {
                 item.getId().setColaboradorId(colaborador.getId());
             }

@@ -26,10 +26,10 @@ public class SenioridadeService {
 	}
 
 	public SenioridadeDto buscarPorId(Integer senioridadeId) {
-		return senioridadeMapper.toDto(buscarOuFalhar(senioridadeId));
+		return senioridadeMapper.toDto(buscar(senioridadeId));
 	}
 
-	public Senioridade buscarOuFalhar(Integer senioridadeId) {
+	public Senioridade buscar(Integer senioridadeId) {
 		return senioridadeRepository.findById(senioridadeId)
 				.orElseThrow(() -> new EntidadeNaoEncontradaException(MSG_SENIORIDADE_NAO_ENCONTRADA));
 	}
