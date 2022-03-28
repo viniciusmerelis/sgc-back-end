@@ -26,6 +26,6 @@ public class TurmaFormacaoDtoInput implements Serializable {
     @NotNull
     private Integer statusId;
     @Valid
-    @NotEmpty(message = "Deve ser informado ao menos uma competencia e um colaborador")
+    @NotEmpty
     private Set<CompetenciaColaboradorDtoIdInput> competenciasColaboradores = new HashSet<>();
 }

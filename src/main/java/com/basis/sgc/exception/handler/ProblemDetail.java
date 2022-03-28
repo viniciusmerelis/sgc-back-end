@@ -1,19 +1,30 @@
 package com.basis.sgc.exception.handler;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+import lombok.Builder;
+import lombok.Getter;
+
+@JsonInclude(Include.NON_NULL)
 @Getter
-@Setter
+@Builder
 public class ProblemDetail {
-    private LocalDateTime timestamp;
-    private String path;
-    private Integer status;
-    private String title;
-    private String detail;
-    private List<Propriedades> propriedades = new ArrayList<>();
+	private Integer status;
+	private String type;
+	private String title;
+	private String detail;
+	private String userMessage;
+	private LocalDateTime timestamp;
+	private List<Propriedades> properties;
+
+	@Getter
+	@Builder
+	public static class Propriedades {
+		private String name;
+		 private String userMessage;
+	}
 }
