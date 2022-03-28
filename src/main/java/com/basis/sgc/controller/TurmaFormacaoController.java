@@ -1,7 +1,7 @@
 package com.basis.sgc.controller;
 
 import com.basis.sgc.service.TurmaFormacaoService;
-import com.basis.sgc.service.dto.TurmaFormacaoDto;
+import com.basis.sgc.service.dto.TurmaFormacaoDTO;
 import com.basis.sgc.service.dto.input.TurmaFormacaoDtoInput;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,24 +19,25 @@ public class TurmaFormacaoController {
     private final TurmaFormacaoService turmaFormacaoService;
 
     @GetMapping()
-    public ResponseEntity<List<TurmaFormacaoDto>> listar() {
+    public ResponseEntity<List<TurmaFormacaoDTO>> listar() {
         return new ResponseEntity<>(turmaFormacaoService.listar(), HttpStatus.OK);
     }
 
     @GetMapping("/{turmaId}")
-    public ResponseEntity<TurmaFormacaoDto> buscar(@PathVariable Integer turmaId) {
+    public ResponseEntity<TurmaFormacaoDTO> buscar(@PathVariable Integer turmaId) {
         return new ResponseEntity<>(turmaFormacaoService.buscarPorId(turmaId), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<TurmaFormacaoDto> salvar(@RequestBody @Valid TurmaFormacaoDtoInput turmaFormacaoDtoInput) {
+    public ResponseEntity<TurmaFormacaoDTO> salvar(@RequestBody @Valid TurmaFormacaoDtoInput turmaFormacaoDtoInput) {
         return new ResponseEntity<>(turmaFormacaoService.salvar(turmaFormacaoDtoInput), HttpStatus.CREATED);
     }
 
     @PutMapping("/{turmaId}")
-    public ResponseEntity<TurmaFormacaoDto> atualizar(@PathVariable Integer turmaId,
+    public ResponseEntity<Void> atualizar(@PathVariable Integer turmaId,
                                                       @RequestBody @Valid TurmaFormacaoDtoInput turmaFormacaoDtoInput) {
-        return new ResponseEntity<>(turmaFormacaoService.atualizar(turmaId, turmaFormacaoDtoInput), HttpStatus.OK);
+        turmaFormacaoService.atualizar(turmaId, turmaFormacaoDtoInput);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{turmaId}")

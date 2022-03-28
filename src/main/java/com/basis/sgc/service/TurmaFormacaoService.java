@@ -12,12 +12,12 @@ import com.basis.sgc.domain.Competencia;
 import com.basis.sgc.domain.Status;
 import com.basis.sgc.domain.TurmaCompetenciaColaborador;
 import com.basis.sgc.domain.TurmaFormacao;
-import com.basis.sgc.enums.Nivel;
+import com.basis.sgc.domain.enums.Nivel;
 import com.basis.sgc.exception.EntidadeNaoEncontradaException;
 import com.basis.sgc.exception.RegraNegocioException;
 import com.basis.sgc.repository.CompetenciaColaboradorRepository;
 import com.basis.sgc.repository.TurmaFormacaoRepository;
-import com.basis.sgc.service.dto.TurmaFormacaoDto;
+import com.basis.sgc.service.dto.TurmaFormacaoDTO;
 import com.basis.sgc.service.dto.input.TurmaFormacaoDtoInput;
 import com.basis.sgc.service.mapper.TurmaFormacaoMapper;
 
@@ -38,31 +38,31 @@ public class TurmaFormacaoService {
 	private final ColaboradorService colaboradorService;
 	private final CompetenciaColaboradorRepository competenciaColaboradorRepository;
 
-	public List<TurmaFormacaoDto> listar() {
+	public List<TurmaFormacaoDTO> listar() {
 		return turmaFormacaoMapper.toDto(turmaFormacaoRepository.findAll());
 	}
 
-	public TurmaFormacaoDto buscarPorId(Integer turmaId) {
+	public TurmaFormacaoDTO buscarPorId(Integer turmaId) {
 		return turmaFormacaoMapper.toDto(buscar(turmaId));
 	}
 
-	public TurmaFormacaoDto salvar(TurmaFormacaoDtoInput turmaFormacaoDtoInput) {
+	public TurmaFormacaoDTO salvar(TurmaFormacaoDtoInput turmaFormacaoDtoInput) {
 		TurmaFormacao turma = turmaFormacaoMapper.toEntity(turmaFormacaoDtoInput);
-		Integer statusId = turma.getStatus().getId();
-		Status status = statusService.buscar(statusId);
-		turma.setStatus(status);
-		turma.setCompetenciasColaboradores(adicionarCompetenciasColaboradores(turma));
+//		Integer statusId = turma.getStatus().getId();
+//		Status status = statusService.buscar(statusId);
+//		turma.setStatus(status);
+		turma.setCompetenciasColaboradores(adicionarCompetenciasColaboradores(turma))	;
 		return turmaFormacaoMapper.toDto(turmaFormacaoRepository.save(turma));
 	}
 
-	public TurmaFormacaoDto atualizar(Integer turmaId, TurmaFormacaoDtoInput turmaFormacaoDtoInput) {
+	public void atualizar(Integer turmaId, TurmaFormacaoDtoInput turmaFormacaoDtoInput) {
 		TurmaFormacao turma = turmaFormacaoMapper.toEntity(turmaFormacaoDtoInput);
 		turma.setId(turmaId);
 		Integer statusId = turma.getStatus().getId();
 		Status status = statusService.buscar(statusId);
 		turma.setStatus(status);
 		turma.setCompetenciasColaboradores(adicionarCompetenciasColaboradores(turma));
-		return turmaFormacaoMapper.toDto(turmaFormacaoRepository.save(turma));
+		turmaFormacaoRepository.save(turma);
 	}
 
 	public void excluir(Integer turmaId) {
@@ -71,7 +71,6 @@ public class TurmaFormacaoService {
 			throw new RegraNegocioException(MSG_ERRO_EXCLUIR_TURMA_INICIADA);
 		}
 		turmaFormacaoRepository.deleteById(turmaId);
-		turmaFormacaoRepository.flush();
 	}
 
 	public TurmaFormacao buscar(Integer turmaId) {

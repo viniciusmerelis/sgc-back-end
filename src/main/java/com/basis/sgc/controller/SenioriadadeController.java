@@ -1,7 +1,7 @@
 package com.basis.sgc.controller;
 
 import com.basis.sgc.service.SenioridadeService;
-import com.basis.sgc.service.dto.SenioridadeDto;
+import com.basis.sgc.service.dto.SenioridadeDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +20,12 @@ public class SenioriadadeController {
     private final SenioridadeService senioridadeService;
 
     @GetMapping
-    public ResponseEntity<List<SenioridadeDto>> listar() {
+    public ResponseEntity<List<SenioridadeDTO>> listar() {
         return new ResponseEntity<>(senioridadeService.listar(), HttpStatus.OK);
     }
 
     @GetMapping("/{senioridadeId}")
-    public ResponseEntity<SenioridadeDto> buscar(@PathVariable Integer senioridadeId) {
+    public ResponseEntity<SenioridadeDTO> buscar(@PathVariable Integer senioridadeId) {
         return new ResponseEntity<>(senioridadeService.buscarPorId(senioridadeId), HttpStatus.OK);
     }
 }

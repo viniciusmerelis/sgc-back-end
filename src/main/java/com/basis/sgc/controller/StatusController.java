@@ -1,7 +1,7 @@
 package com.basis.sgc.controller;
 
 import com.basis.sgc.service.StatusService;
-import com.basis.sgc.service.dto.StatusDto;
+import com.basis.sgc.service.dto.StatusDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +20,12 @@ public class StatusController {
     private final StatusService statusService;
 
     @GetMapping
-    public ResponseEntity<List<StatusDto>> listar() {
+    public ResponseEntity<List<StatusDTO>> listar() {
         return new ResponseEntity<>(statusService.listar(), HttpStatus.OK);
     }
 
     @GetMapping("/{statusId}")
-    public ResponseEntity<StatusDto> buscar(@PathVariable Integer statusId) {
+    public ResponseEntity<StatusDTO> buscar(@PathVariable Integer statusId) {
         return new ResponseEntity<>(statusService.buscarPorId(statusId), HttpStatus.OK);
     }
 }

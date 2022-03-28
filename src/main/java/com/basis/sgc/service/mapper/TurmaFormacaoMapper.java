@@ -2,8 +2,8 @@ package com.basis.sgc.service.mapper;
 
 import com.basis.sgc.domain.TurmaCompetenciaColaborador;
 import com.basis.sgc.domain.TurmaFormacao;
-import com.basis.sgc.service.dto.CompetenciaColaboradorDto;
-import com.basis.sgc.service.dto.TurmaFormacaoDto;
+import com.basis.sgc.service.dto.CompetenciaColaboradorDTO;
+import com.basis.sgc.service.dto.TurmaFormacaoDTO;
 import com.basis.sgc.service.dto.input.CompetenciaColaboradorDtoIdInput;
 import com.basis.sgc.service.dto.input.TurmaFormacaoDtoInput;
 import org.mapstruct.Mapper;
@@ -14,13 +14,12 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface TurmaFormacaoMapper {
 
-    @Mapping(source = "status.id", target = "status.id")
-    @Mapping(source = "status.nome", target = "status.nome")
-    TurmaFormacaoDto toDto(TurmaFormacao turmaFormacao);
+    @Mapping(source = "status.nome", target = "statusNome")
+    TurmaFormacaoDTO toDto(TurmaFormacao turmaFormacao);
 
     @Mapping(source = "status.id", target = "status.id")
     @Mapping(source = "status.nome", target = "status.nome")
-    List<TurmaFormacaoDto> toDto(List<TurmaFormacao> turmaFormacao);
+    List<TurmaFormacaoDTO> toDto(List<TurmaFormacao> turmaFormacao);
 
     @Mapping(source = "statusId", target = "status.id")
     @Mapping(target = "id", ignore = true)
@@ -37,5 +36,5 @@ public interface TurmaFormacaoMapper {
     @Mapping(source = "id.colaboradorId", target = "colaborador.id")
     @Mapping(source = "competencia.nome", target = "competencia.nome")
     @Mapping(source = "colaborador.nome", target = "colaborador.nome")
-    CompetenciaColaboradorDto toCompetenciaColaboradorDto(TurmaCompetenciaColaborador turmaCompetenciaColaborador);
+    CompetenciaColaboradorDTO toCompetenciaColaboradorDto(TurmaCompetenciaColaborador turmaCompetenciaColaborador);
 }

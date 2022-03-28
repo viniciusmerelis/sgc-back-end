@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CompetenciaColaboradorNivelMaximoListDto implements Serializable {
+public class CompetenciaColaboradorNivelMaximoListDTO implements Serializable {
     private Integer competenciaId;
     private String competenciaNome;
     private Integer colaboradorId;

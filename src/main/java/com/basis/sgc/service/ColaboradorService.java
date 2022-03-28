@@ -7,7 +7,7 @@ import com.basis.sgc.domain.Senioridade;
 import com.basis.sgc.exception.EntidadeEmUsoException;
 import com.basis.sgc.exception.EntidadeNaoEncontradaException;
 import com.basis.sgc.repository.ColaboradorRepository;
-import com.basis.sgc.service.dto.ColaboradorDto;
+import com.basis.sgc.service.dto.ColaboradorDTO;
 import com.basis.sgc.service.dto.input.ColaboradorDtoInput;
 import com.basis.sgc.service.mapper.ColaboradorMapper;
 import lombok.RequiredArgsConstructor;
@@ -32,15 +32,15 @@ public class ColaboradorService {
     private final SenioridadeService senioridadeService;
     private final CompetenciaService competenciaService;
 
-    public List<ColaboradorDto> listar() {
+    public List<ColaboradorDTO> listar() {
         return colaboradorMapper.toDto(colaboradorRepository.findAll());
     }
 
-    public ColaboradorDto buscarPorId(Integer colaboradorId) {
+    public ColaboradorDTO buscarPorId(Integer colaboradorId) {
         return colaboradorMapper.toDto(buscar(colaboradorId));
     }
 
-    public ColaboradorDto salvar(ColaboradorDtoInput colaboradorDtoInput) {
+    public ColaboradorDTO salvar(ColaboradorDtoInput colaboradorDtoInput) {
         Colaborador colaborador = colaboradorMapper.toEntity(colaboradorDtoInput);
         Integer senioridadeId = colaborador.getSenioridade().getId();
         Senioridade senioridade = senioridadeService.buscar(senioridadeId);
@@ -49,7 +49,7 @@ public class ColaboradorService {
         return colaboradorMapper.toDto(colaboradorRepository.save(colaborador));
     }
 
-    public ColaboradorDto atualizar(Integer colaboradorId, ColaboradorDtoInput colaboradorDtoInput) {
+    public ColaboradorDTO atualizar(Integer colaboradorId, ColaboradorDtoInput colaboradorDtoInput) {
         Colaborador colaborador = colaboradorMapper.toEntity(colaboradorDtoInput);
         colaborador.setId(colaboradorId);
         Integer senioridadeId = colaborador.getSenioridade().getId();

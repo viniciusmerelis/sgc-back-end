@@ -34,7 +34,7 @@ public class TurmaFormacao implements Serializable {
     @Column(name = "data_termino", nullable = false)
     private LocalDateTime dataTermino;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "status_id", nullable = false)
     private Status status;
 

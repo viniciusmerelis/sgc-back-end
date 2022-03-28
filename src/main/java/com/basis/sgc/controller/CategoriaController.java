@@ -1,7 +1,7 @@
 package com.basis.sgc.controller;
 
 import com.basis.sgc.service.CategoriaService;
-import com.basis.sgc.service.dto.CategoriaDto;
+import com.basis.sgc.service.dto.CategoriaDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +20,12 @@ public class CategoriaController {
     private final CategoriaService categoriaService;
 
     @GetMapping
-    public ResponseEntity<List<CategoriaDto>> listar() {
+    public ResponseEntity<List<CategoriaDTO>> listar() {
         return new ResponseEntity<>(categoriaService.listar(), HttpStatus.OK);
     }
 
     @GetMapping("/{categoriaId}")
-    public ResponseEntity<CategoriaDto> buscar(@PathVariable Integer categoriaId) {
+    public ResponseEntity<CategoriaDTO> buscar(@PathVariable Integer categoriaId) {
         return new ResponseEntity<>(categoriaService.buscarPorId(categoriaId), HttpStatus.OK);
     }
 }

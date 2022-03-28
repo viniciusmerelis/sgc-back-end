@@ -7,9 +7,9 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-public class CompetenciaDto implements Serializable {
+public class CompetenciaDTO implements Serializable {
     private Integer id;
     private String nome;
     private String descricao;
-    private CategoriaDto categoria;
+    private CategoriaDTO categoria;
 }

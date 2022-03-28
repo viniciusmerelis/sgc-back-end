@@ -1,7 +1,7 @@
 package com.basis.sgc.controller;
 
 import com.basis.sgc.service.ColaboradorService;
-import com.basis.sgc.service.dto.ColaboradorDto;
+import com.basis.sgc.service.dto.ColaboradorDTO;
 import com.basis.sgc.service.dto.input.ColaboradorDtoInput;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,22 +19,22 @@ public class ColaboradorController {
     private final ColaboradorService colaboradorService;
 
     @GetMapping
-    public ResponseEntity<List<ColaboradorDto>> listar() {
+    public ResponseEntity<List<ColaboradorDTO>> listar() {
         return new ResponseEntity<>(colaboradorService.listar(), HttpStatus.OK);
     }
 
     @GetMapping("/{colaboradorId}")
-    public ResponseEntity<ColaboradorDto> buscar(@PathVariable Integer colaboradorId) {
+    public ResponseEntity<ColaboradorDTO> buscar(@PathVariable Integer colaboradorId) {
         return new ResponseEntity<>(colaboradorService.buscarPorId(colaboradorId), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<ColaboradorDto> salvar(@RequestBody @Valid ColaboradorDtoInput colaboradorDtoInput) {
+    public ResponseEntity<ColaboradorDTO> salvar(@RequestBody @Valid ColaboradorDtoInput colaboradorDtoInput) {
         return new ResponseEntity<>(colaboradorService.salvar(colaboradorDtoInput), HttpStatus.CREATED);
     }
 
     @PutMapping("/{colaboradorId}")
-    public ResponseEntity<ColaboradorDto> atualizar(@PathVariable Integer colaboradorId,
+    public ResponseEntity<ColaboradorDTO> atualizar(@PathVariable Integer colaboradorId,
                                                     @RequestBody @Valid ColaboradorDtoInput colaboradorDtoInput) {
         return new ResponseEntity<>(colaboradorService.atualizar(colaboradorId, colaboradorDtoInput), HttpStatus.OK);
     }
