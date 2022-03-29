@@ -1,6 +1,6 @@
 package com.basis.sgc.domain;
 
-import com.basis.sgc.enums.Nivel;
+import com.basis.sgc.domain.enums.Nivel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Getter
 @Setter
-public class ColaboradorDto implements Serializable {
+public class ColaboradorDTO implements Serializable {
     private Integer id;
     private String nome;
     private String sobrenome;
@@ -18,6 +18,6 @@ public class ColaboradorDto implements Serializable {
     private String email;
     private LocalDateTime dataNascimento;
     private LocalDateTime dataAdmissao;
-    private SenioridadeDto senioridade;
-    private Set<CompetenciaNivelDto> competencias = new HashSet<>();
+    private SenioridadeDTO senioridade;
+    private Set<CompetenciaNivelDTO> competencias = new HashSet<>();
 }

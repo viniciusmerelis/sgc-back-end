@@ -3,7 +3,7 @@ package com.basis.sgc.service;
 import com.basis.sgc.domain.Senioridade;
 import com.basis.sgc.exception.EntidadeNaoEncontradaException;
 import com.basis.sgc.repository.SenioridadeRepository;
-import com.basis.sgc.service.dto.SenioridadeDto;
+import com.basis.sgc.service.dto.SenioridadeDTO;
 import com.basis.sgc.service.mapper.SenioridadeMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,11 +21,11 @@ public class SenioridadeService {
 	private final SenioridadeRepository senioridadeRepository;
 	private final SenioridadeMapper senioridadeMapper;
 
-	public List<SenioridadeDto> listar() {
+	public List<SenioridadeDTO> listar() {
 		return senioridadeMapper.toDto(senioridadeRepository.findAll());
 	}
 
-	public SenioridadeDto buscarPorId(Integer senioridadeId) {
+	public SenioridadeDTO buscarPorId(Integer senioridadeId) {
 		return senioridadeMapper.toDto(buscar(senioridadeId));
 	}
 

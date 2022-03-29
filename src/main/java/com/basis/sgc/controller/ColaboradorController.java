@@ -1,8 +1,7 @@
 package com.basis.sgc.controller;
 
 import com.basis.sgc.service.ColaboradorService;
-import com.basis.sgc.service.dto.ColaboradorDto;
-import com.basis.sgc.service.dto.input.ColaboradorDtoInput;
+import com.basis.sgc.service.dto.ColaboradorDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,24 +18,25 @@ public class ColaboradorController {
     private final ColaboradorService colaboradorService;
 
     @GetMapping
-    public ResponseEntity<List<ColaboradorDto>> listar() {
+    public ResponseEntity<List<ColaboradorDTO>> listar() {
         return new ResponseEntity<>(colaboradorService.listar(), HttpStatus.OK);
     }
 
     @GetMapping("/{colaboradorId}")
-    public ResponseEntity<ColaboradorDto> buscar(@PathVariable Integer colaboradorId) {
+    public ResponseEntity<ColaboradorDTO> buscar(@PathVariable Integer colaboradorId) {
         return new ResponseEntity<>(colaboradorService.buscarPorId(colaboradorId), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<ColaboradorDto> salvar(@RequestBody @Valid ColaboradorDtoInput colaboradorDtoInput) {
-        return new ResponseEntity<>(colaboradorService.salvar(colaboradorDtoInput), HttpStatus.CREATED);
+    public ResponseEntity<Void> salvar(@RequestBody @Valid ColaboradorDTO colaboradorDTO) {
+        colaboradorService.salvar(colaboradorDTO);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping("/{colaboradorId}")
-    public ResponseEntity<ColaboradorDto> atualizar(@PathVariable Integer colaboradorId,
-                                                    @RequestBody @Valid ColaboradorDtoInput colaboradorDtoInput) {
-        return new ResponseEntity<>(colaboradorService.atualizar(colaboradorId, colaboradorDtoInput), HttpStatus.OK);
+    @PutMapping
+    public ResponseEntity<Void> atualizar(@RequestBody @Valid ColaboradorDTO colaboradorDtoInput) {
+        colaboradorService.salvar(colaboradorDtoInput);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{colaboradorId}")

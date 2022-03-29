@@ -1,8 +1,7 @@
 package com.basis.sgc.controller;
 
 import com.basis.sgc.service.TurmaFormacaoService;
-import com.basis.sgc.service.dto.TurmaFormacaoDto;
-import com.basis.sgc.service.dto.input.TurmaFormacaoDtoInput;
+import com.basis.sgc.service.dto.TurmaFormacaoDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,24 +18,25 @@ public class TurmaFormacaoController {
     private final TurmaFormacaoService turmaFormacaoService;
 
     @GetMapping()
-    public ResponseEntity<List<TurmaFormacaoDto>> listar() {
+    public ResponseEntity<List<TurmaFormacaoDTO>> listar() {
         return new ResponseEntity<>(turmaFormacaoService.listar(), HttpStatus.OK);
     }
 
     @GetMapping("/{turmaId}")
-    public ResponseEntity<TurmaFormacaoDto> buscar(@PathVariable Integer turmaId) {
+    public ResponseEntity<TurmaFormacaoDTO> buscar(@PathVariable Integer turmaId) {
         return new ResponseEntity<>(turmaFormacaoService.buscarPorId(turmaId), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<TurmaFormacaoDto> salvar(@RequestBody @Valid TurmaFormacaoDtoInput turmaFormacaoDtoInput) {
-        return new ResponseEntity<>(turmaFormacaoService.salvar(turmaFormacaoDtoInput), HttpStatus.CREATED);
+    public ResponseEntity<Void> salvar(@RequestBody @Valid TurmaFormacaoDTO turmaFormacaoDTO) {
+        turmaFormacaoService.salvar(turmaFormacaoDTO);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping("/{turmaId}")
-    public ResponseEntity<TurmaFormacaoDto> atualizar(@PathVariable Integer turmaId,
-                                                      @RequestBody @Valid TurmaFormacaoDtoInput turmaFormacaoDtoInput) {
-        return new ResponseEntity<>(turmaFormacaoService.atualizar(turmaId, turmaFormacaoDtoInput), HttpStatus.OK);
+    @PutMapping
+    public ResponseEntity<Void> atualizar(@RequestBody @Valid TurmaFormacaoDTO turmaFormacaoDTO) {
+        turmaFormacaoService.salvar(turmaFormacaoDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{turmaId}")

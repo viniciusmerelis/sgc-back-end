@@ -3,7 +3,7 @@ package com.basis.sgc.service;
 import com.basis.sgc.domain.Status;
 import com.basis.sgc.exception.EntidadeNaoEncontradaException;
 import com.basis.sgc.repository.StatusRepository;
-import com.basis.sgc.service.dto.StatusDto;
+import com.basis.sgc.service.dto.StatusDTO;
 import com.basis.sgc.service.mapper.StatusMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,11 +21,11 @@ public class StatusService {
     private final StatusRepository statusRepository;
     private final StatusMapper statusMapper;
 
-    public List<StatusDto> listar() {
+    public List<StatusDTO> listar() {
         return statusMapper.toDto(statusRepository.findAll());
     }
 
-    public StatusDto buscarPorId(Integer statusId) {
+    public StatusDTO buscarPorId(Integer statusId) {
         return statusMapper.toDto(buscar(statusId));
     }
 

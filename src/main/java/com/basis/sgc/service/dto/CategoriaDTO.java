@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-public class CategoriaDto implements Serializable {
+public class CategoriaDTO implements Serializable {
     private Integer id;
     private String nome;
 }

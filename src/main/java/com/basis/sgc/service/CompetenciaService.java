@@ -1,12 +1,10 @@
 package com.basis.sgc.service;
 
-import com.basis.sgc.domain.Categoria;
 import com.basis.sgc.domain.Competencia;
 import com.basis.sgc.exception.EntidadeEmUsoException;
 import com.basis.sgc.exception.EntidadeNaoEncontradaException;
 import com.basis.sgc.repository.CompetenciaRepository;
 import com.basis.sgc.service.dto.*;
-import com.basis.sgc.service.dto.input.CompetenciaDtoInput;
 import com.basis.sgc.service.mapper.CompetenciaMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -29,31 +27,18 @@ public class CompetenciaService {
 
     private final CompetenciaRepository competenciaRepository;
     private final CompetenciaMapper competenciaMapper;
-    private final CategoriaService categoriaService;
 
-    public List<CompetenciaDto> listar() {
+    public List<CompetenciaDTO> listar() {
         return competenciaMapper.toDto(competenciaRepository.findAll());
     }
 
-    public CompetenciaDto buscarPorId(Integer competenciaId) {
+    public CompetenciaDTO buscarPorId(Integer competenciaId) {
         return competenciaMapper.toDto(buscar(competenciaId));
     }
 
-    public CompetenciaDto salvar(CompetenciaDtoInput competenciaDtoInput) {
-        Competencia competencia = competenciaMapper.toEntity(competenciaDtoInput);
-        Integer categoriaId = competencia.getCategoria().getId();
-        Categoria categoria = categoriaService.buscar(categoriaId);
-        competencia.setCategoria(categoria);
-        return competenciaMapper.toDto(competenciaRepository.save(competencia));
-    }
-
-    public CompetenciaDto atualizar(Integer competenciaId, CompetenciaDtoInput competenciaDtoInput) {
-        Competencia competencia = competenciaMapper.toEntity(competenciaDtoInput);
-        competencia.setId(competenciaId);
-        Integer categoriaId = competencia.getCategoria().getId();
-        Categoria categoria = categoriaService.buscar(categoriaId);
-        competencia.setCategoria(categoria);
-        return competenciaMapper.toDto(competenciaRepository.save(competencia));
+    public void salvar(CompetenciaDTO competenciaDTO) {
+        Competencia competencia = competenciaMapper.toEntity(competenciaDTO);
+        competenciaMapper.toDto(competenciaRepository.save(competencia));
     }
 
     public void excluir(Integer competenciaId) {
@@ -72,19 +57,19 @@ public class CompetenciaService {
                 .orElseThrow(() -> new EntidadeNaoEncontradaException(MSG_COMPETENCIA_NAO_ENCONTRADA));
     }
 
-    public List<CompetenciaColaboradorNivelMaximoDto> buscarColaboradoresNivelMaximo() {
-        List<CompetenciaColaboradorNivelMaximoListDto> resultQuery = competenciaRepository.buscarCompetenciasEColaboradoresNivelMaximo();
-        Map<Integer, CompetenciaColaboradorNivelMaximoDto> map = new HashMap<>();
+    public List<CompetenciaColaboradorNivelMaximoDTO> buscarColaboradoresNivelMaximo() {
+        List<CompetenciaColaboradorNivelMaximoListDTO> resultQuery = competenciaRepository.buscarCompetenciasEColaboradoresNivelMaximo();
+        Map<Integer, CompetenciaColaboradorNivelMaximoDTO> map = new HashMap<>();
 
-        for (CompetenciaColaboradorNivelMaximoListDto itemResult : resultQuery) {
-            CompetenciaColaboradorNivelMaximoDto competenciaKey = map.computeIfAbsent(itemResult.getCompetenciaId(), (k) -> {
-                CompetenciaColaboradorNivelMaximoDto competencia = new CompetenciaColaboradorNivelMaximoDto();
-                competencia.setCompetencia(new CompetenciaResumoDto());
+        for (CompetenciaColaboradorNivelMaximoListDTO itemResult : resultQuery) {
+            CompetenciaColaboradorNivelMaximoDTO competenciaKey = map.computeIfAbsent(itemResult.getCompetenciaId(), (k) -> {
+                CompetenciaColaboradorNivelMaximoDTO competencia = new CompetenciaColaboradorNivelMaximoDTO();
+                competencia.setCompetencia(new CompetenciaResumoDTO());
                 competencia.getCompetencia().setId(itemResult.getCompetenciaId());
                 competencia.getCompetencia().setNome(itemResult.getCompetenciaNome());
                 return competencia;
             });
-            ColaboradorResumoDto colaborador = new ColaboradorResumoDto();
+            ColaboradorResumoDTO colaborador = new ColaboradorResumoDTO();
             colaborador.setId(itemResult.getColaboradorId());
             colaborador.setNome(itemResult.getColaboradorNome());
             colaborador.setSobrenome(itemResult.getColaboradorSobrenome());

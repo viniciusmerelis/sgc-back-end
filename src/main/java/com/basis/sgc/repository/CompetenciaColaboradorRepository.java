@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.basis.sgc.domain.CompetenciaColaborador;
 import com.basis.sgc.domain.CompetenciaColaboradorId;
-import com.basis.sgc.enums.Nivel;
+import com.basis.sgc.domain.enums.Nivel;
 
 @Repository
 public interface CompetenciaColaboradorRepository extends JpaRepository<CompetenciaColaborador, CompetenciaColaboradorId> {

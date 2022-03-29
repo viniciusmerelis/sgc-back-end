@@ -1,4 +1,4 @@
-package com.basis.sgc.enums;
+package com.basis.sgc.domain.enums;
 
 public enum Nivel {
     CONHECE,
