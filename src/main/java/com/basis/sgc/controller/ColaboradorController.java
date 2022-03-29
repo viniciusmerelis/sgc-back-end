@@ -2,7 +2,6 @@ package com.basis.sgc.controller;
 
 import com.basis.sgc.service.ColaboradorService;
 import com.basis.sgc.service.dto.ColaboradorDTO;
-import com.basis.sgc.service.dto.input.ColaboradorDtoInput;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,14 +28,15 @@ public class ColaboradorController {
     }
 
     @PostMapping
-    public ResponseEntity<ColaboradorDTO> salvar(@RequestBody @Valid ColaboradorDtoInput colaboradorDtoInput) {
-        return new ResponseEntity<>(colaboradorService.salvar(colaboradorDtoInput), HttpStatus.CREATED);
+    public ResponseEntity<Void> salvar(@RequestBody @Valid ColaboradorDTO colaboradorDTO) {
+        colaboradorService.salvar(colaboradorDTO);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping("/{colaboradorId}")
-    public ResponseEntity<ColaboradorDTO> atualizar(@PathVariable Integer colaboradorId,
-                                                    @RequestBody @Valid ColaboradorDtoInput colaboradorDtoInput) {
-        return new ResponseEntity<>(colaboradorService.atualizar(colaboradorId, colaboradorDtoInput), HttpStatus.OK);
+    @PutMapping
+    public ResponseEntity<Void> atualizar(@RequestBody @Valid ColaboradorDTO colaboradorDtoInput) {
+        colaboradorService.salvar(colaboradorDtoInput);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{colaboradorId}")

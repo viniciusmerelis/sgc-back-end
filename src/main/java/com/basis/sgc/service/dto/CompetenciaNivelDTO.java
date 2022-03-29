@@ -11,5 +11,7 @@ import java.io.Serializable;
 public class CompetenciaNivelDTO implements Serializable {
     private Integer id;
     private String nome;
+    private String descricao;
+    private CategoriaDTO categoria;
     private Nivel nivel;
 }

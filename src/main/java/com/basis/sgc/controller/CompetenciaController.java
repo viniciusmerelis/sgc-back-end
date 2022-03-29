@@ -3,7 +3,6 @@ package com.basis.sgc.controller;
 import com.basis.sgc.service.CompetenciaService;
 import com.basis.sgc.service.dto.CompetenciaColaboradorNivelMaximoDTO;
 import com.basis.sgc.service.dto.CompetenciaDTO;
-import com.basis.sgc.service.dto.input.CompetenciaDtoInput;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,14 +29,15 @@ public class CompetenciaController {
     }
 
     @PostMapping
-    public ResponseEntity<CompetenciaDTO> salvar(@RequestBody @Valid CompetenciaDtoInput competenciaDtoInput) {
-        return new ResponseEntity<>(competenciaService.salvar(competenciaDtoInput), HttpStatus.CREATED);
+    public ResponseEntity<Void> salvar(@RequestBody @Valid CompetenciaDTO competenciaDTO) {
+        competenciaService.salvar(competenciaDTO);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping("/{competenciaId}")
-    public ResponseEntity<CompetenciaDTO> atualizar(@PathVariable Integer competenciaId,
-                                                    @RequestBody @Valid CompetenciaDtoInput competenciaDtoInput) {
-        return new ResponseEntity<>(competenciaService.atualizar(competenciaId, competenciaDtoInput), HttpStatus.OK);
+    @PutMapping
+    public ResponseEntity<Void> atualizar(@RequestBody @Valid CompetenciaDTO competenciaDTO) {
+        competenciaService.salvar(competenciaDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{competenciaId}")

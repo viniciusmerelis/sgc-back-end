@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface CompetenciaRepository extends JpaRepository<Competencia, Integer> {
 
-    @Query(value = "select new com.basis.sgc.service.dto.CompetenciaColaboradorNivelMaximoListDto(" +
+    @Query(value = "select new com.basis.sgc.service.dto.CompetenciaColaboradorNivelMaximoListDTO(" +
             "cc.id.competenciaId, cc.competencia.nome, cc.id.colaboradorId, cc.colaborador.nome," +
             "cc.colaborador.sobrenome) from CompetenciaColaborador cc where cc.nivel=2")
     List<CompetenciaColaboradorNivelMaximoListDTO> buscarCompetenciasEColaboradoresNivelMaximo();

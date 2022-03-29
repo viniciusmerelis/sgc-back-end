@@ -2,7 +2,6 @@ package com.basis.sgc.controller;
 
 import com.basis.sgc.service.TurmaFormacaoService;
 import com.basis.sgc.service.dto.TurmaFormacaoDTO;
-import com.basis.sgc.service.dto.input.TurmaFormacaoDtoInput;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,14 +28,14 @@ public class TurmaFormacaoController {
     }
 
     @PostMapping
-    public ResponseEntity<TurmaFormacaoDTO> salvar(@RequestBody @Valid TurmaFormacaoDtoInput turmaFormacaoDtoInput) {
-        return new ResponseEntity<>(turmaFormacaoService.salvar(turmaFormacaoDtoInput), HttpStatus.CREATED);
+    public ResponseEntity<Void> salvar(@RequestBody @Valid TurmaFormacaoDTO turmaFormacaoDTO) {
+        turmaFormacaoService.salvar(turmaFormacaoDTO);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping("/{turmaId}")
-    public ResponseEntity<Void> atualizar(@PathVariable Integer turmaId,
-                                                      @RequestBody @Valid TurmaFormacaoDtoInput turmaFormacaoDtoInput) {
-        turmaFormacaoService.atualizar(turmaId, turmaFormacaoDtoInput);
+    @PutMapping
+    public ResponseEntity<Void> atualizar(@RequestBody @Valid TurmaFormacaoDTO turmaFormacaoDTO) {
+        turmaFormacaoService.salvar(turmaFormacaoDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

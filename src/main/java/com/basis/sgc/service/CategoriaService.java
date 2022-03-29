@@ -31,7 +31,6 @@ public class CategoriaService {
 
     public Categoria buscar(Integer categoriaId) {
         return categoriaRepository.findById(categoriaId)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException(
-                        String.format(MSG_CATEGORIA_NAO_ENCOTRADA, categoriaId)));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException(MSG_CATEGORIA_NAO_ENCOTRADA + categoriaId));
     }
 }

@@ -1,14 +1,11 @@
 package com.basis.sgc.service;
 
 import com.basis.sgc.domain.Colaborador;
-import com.basis.sgc.domain.Competencia;
 import com.basis.sgc.domain.CompetenciaColaborador;
-import com.basis.sgc.domain.Senioridade;
 import com.basis.sgc.exception.EntidadeEmUsoException;
 import com.basis.sgc.exception.EntidadeNaoEncontradaException;
 import com.basis.sgc.repository.ColaboradorRepository;
 import com.basis.sgc.service.dto.ColaboradorDTO;
-import com.basis.sgc.service.dto.input.ColaboradorDtoInput;
 import com.basis.sgc.service.mapper.ColaboradorMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -29,8 +26,6 @@ public class ColaboradorService {
 
     private final ColaboradorRepository colaboradorRepository;
     private final ColaboradorMapper colaboradorMapper;
-    private final SenioridadeService senioridadeService;
-    private final CompetenciaService competenciaService;
 
     public List<ColaboradorDTO> listar() {
         return colaboradorMapper.toDto(colaboradorRepository.findAll());
@@ -40,23 +35,10 @@ public class ColaboradorService {
         return colaboradorMapper.toDto(buscar(colaboradorId));
     }
 
-    public ColaboradorDTO salvar(ColaboradorDtoInput colaboradorDtoInput) {
-        Colaborador colaborador = colaboradorMapper.toEntity(colaboradorDtoInput);
-        Integer senioridadeId = colaborador.getSenioridade().getId();
-        Senioridade senioridade = senioridadeService.buscar(senioridadeId);
-        colaborador.setSenioridade(senioridade);
+    public void salvar(ColaboradorDTO colaboradorDTO) {
+        Colaborador colaborador = colaboradorMapper.toEntity(colaboradorDTO);
         colaborador.setCompetencias(adicionarCompetencias(colaborador));
-        return colaboradorMapper.toDto(colaboradorRepository.save(colaborador));
-    }
-
-    public ColaboradorDTO atualizar(Integer colaboradorId, ColaboradorDtoInput colaboradorDtoInput) {
-        Colaborador colaborador = colaboradorMapper.toEntity(colaboradorDtoInput);
-        colaborador.setId(colaboradorId);
-        Integer senioridadeId = colaborador.getSenioridade().getId();
-        Senioridade senioridade = senioridadeService.buscar(senioridadeId);
-        colaborador.setSenioridade(senioridade);
-        colaborador.setCompetencias(adicionarCompetencias(colaborador));
-        return colaboradorMapper.toDto(colaboradorRepository.save(colaborador));
+        colaboradorMapper.toDto(colaboradorRepository.save(colaborador));
     }
 
     public void excluir(Integer colaboradorId) {
@@ -77,12 +59,11 @@ public class ColaboradorService {
 
     private Set<CompetenciaColaborador> adicionarCompetencias(Colaborador colaborador) {
         colaborador.getCompetencias().forEach(item -> {
-            Competencia competencia = competenciaService.buscar(item.getId().getCompetenciaId());
             if (colaborador.getId() != null) {
                 item.getId().setColaboradorId(colaborador.getId());
             }
             item.setColaborador(colaborador);
-            item.setCompetencia(competencia);
+            item.getCompetencia().setId(item.getCompetencia().getId());
         });
         return colaborador.getCompetencias();
     }
