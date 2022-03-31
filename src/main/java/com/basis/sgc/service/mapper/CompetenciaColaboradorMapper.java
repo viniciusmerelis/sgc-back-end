@@ -26,4 +26,8 @@ public interface CompetenciaColaboradorMapper extends EntityMapper<CompetenciaCo
     @Override
     @InheritInverseConfiguration
     CompetenciaColaborador toEntity(CompetenciaColaboradorDTO dto);
+
+    @Override
+    @InheritInverseConfiguration
+    List<CompetenciaColaborador> toEntity(List<CompetenciaColaboradorDTO> competenciaColaboradorDTOS);
 }

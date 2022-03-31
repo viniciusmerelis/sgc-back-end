@@ -44,6 +44,6 @@ public class Colaborador implements Serializable {
     @JoinColumn(name = "senioridade_id", nullable = false)
     private Senioridade senioridade;
 
-    @OneToMany(mappedBy = "colaborador", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "colaborador")
     private Set<CompetenciaColaborador> competencias = new HashSet<>();
 }
