@@ -5,8 +5,6 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -19,5 +17,4 @@ public class ColaboradorDTO implements Serializable {
     private LocalDateTime dataNascimento;
     private LocalDateTime dataAdmissao;
     private SenioridadeDTO senioridade;
-    private Set<CompetenciaNivelDTO> competencias = new HashSet<>();
 }

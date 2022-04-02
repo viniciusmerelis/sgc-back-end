@@ -37,7 +37,6 @@ public class ColaboradorService {
 
     public void salvar(ColaboradorDTO colaboradorDTO) {
         Colaborador colaborador = colaboradorMapper.toEntity(colaboradorDTO);
-        colaborador.setCompetencias(adicionarCompetencias(colaborador));
         colaboradorMapper.toDto(colaboradorRepository.save(colaborador));
     }
 
