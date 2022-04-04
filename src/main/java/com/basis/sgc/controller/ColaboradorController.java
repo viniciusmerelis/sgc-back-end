@@ -28,14 +28,13 @@ public class ColaboradorController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> salvar(@RequestBody @Valid ColaboradorDTO colaboradorDTO) {
-        colaboradorService.salvar(colaboradorDTO);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<ColaboradorDTO> salvar(@RequestBody @Valid ColaboradorDTO colaboradorDTO) {
+        return new ResponseEntity<>(colaboradorService.salvar(colaboradorDTO), HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<Void> atualizar(@RequestBody @Valid ColaboradorDTO colaboradorDtoInput) {
-        colaboradorService.salvar(colaboradorDtoInput);
+    public ResponseEntity<ColaboradorDTO> atualizar(@RequestBody @Valid ColaboradorDTO colaboradorDTO) {
+        colaboradorService.atualizar(colaboradorDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

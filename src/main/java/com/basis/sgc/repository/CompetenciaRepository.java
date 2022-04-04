@@ -12,7 +12,10 @@ import java.util.List;
 public interface CompetenciaRepository extends JpaRepository<Competencia, Integer> {
 
     @Query(value = "select new com.basis.sgc.service.dto.CompetenciaColaboradorNivelMaximoListDTO(" +
-            "cc.id.competenciaId, cc.competencia.nome, cc.id.colaboradorId, cc.colaborador.nome," +
-            "cc.colaborador.sobrenome) from CompetenciaColaborador cc where cc.nivel=2")
+            "cc.id.competenciaId, c.nome, cc.id.colaboradorId, colab.nome," +
+            "colab.sobrenome) from CompetenciaColaborador cc " +
+            "join Competencia c on c.id = cc.id.competenciaId " +
+            "join Colaborador colab on colab.id = cc.id.colaboradorId " +
+            "where cc.nivel=2")
     List<CompetenciaColaboradorNivelMaximoListDTO> buscarCompetenciasEColaboradoresNivelMaximo();
 }

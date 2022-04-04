@@ -4,7 +4,7 @@ import com.basis.sgc.domain.TurmaFormacao;
 import com.basis.sgc.service.dto.TurmaFormacaoDTO;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring", uses = CompetenciaColaboradorMapper.class)
+@Mapper(componentModel = "spring")
 public interface TurmaFormacaoMapper extends EntityMapper<TurmaFormacaoDTO, TurmaFormacao> {
 
 }

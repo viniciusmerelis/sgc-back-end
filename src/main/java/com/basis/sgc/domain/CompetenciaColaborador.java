@@ -1,9 +1,7 @@
 package com.basis.sgc.domain;
 
 import com.basis.sgc.domain.enums.Nivel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,19 +11,21 @@ import java.io.Serializable;
 @EqualsAndHashCode(of = "id")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class CompetenciaColaborador implements Serializable {
     @EmbeddedId
     private CompetenciaColaboradorId id;
 
-    @MapsId("competenciaId")
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "competencia_id", referencedColumnName = "id", insertable = false, updatable = false)
-    private Competencia competencia;
-
-    @MapsId("colaboradorId")
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "colaborador_id", referencedColumnName = "id", insertable = false, updatable = false)
-    private Colaborador colaborador;
+//    @MapsId("competenciaId")
+//    @ManyToOne(optional = false)
+//    @JoinColumn(name = "competencia_id", referencedColumnName = "id", insertable = false, updatable = false)
+//    private Competencia competencia;
+//
+//    @MapsId("colaboradorId")
+//    @ManyToOne(optional = false)
+//    @JoinColumn(name = "colaborador_id", referencedColumnName = "id", insertable = false, updatable = false)
+//    private Colaborador colaborador;
 
     @Enumerated(value = EnumType.ORDINAL)
     @Column(name = "nivel")

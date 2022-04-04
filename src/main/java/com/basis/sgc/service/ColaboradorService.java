@@ -2,10 +2,12 @@ package com.basis.sgc.service;
 
 import com.basis.sgc.domain.Colaborador;
 import com.basis.sgc.domain.CompetenciaColaborador;
+import com.basis.sgc.domain.CompetenciaColaboradorId;
 import com.basis.sgc.exception.EntidadeEmUsoException;
 import com.basis.sgc.exception.EntidadeNaoEncontradaException;
 import com.basis.sgc.repository.ColaboradorRepository;
 import com.basis.sgc.service.dto.ColaboradorDTO;
+import com.basis.sgc.service.dto.CompetenciaDoColaboradorDTO;
 import com.basis.sgc.service.mapper.ColaboradorMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,22 +29,48 @@ public class ColaboradorService {
 
     private final ColaboradorRepository colaboradorRepository;
     private final ColaboradorMapper colaboradorMapper;
+    private final CompetenciaColaboradorService competenciaColaboradorService;
 
     public List<ColaboradorDTO> listar() {
         return colaboradorMapper.toDto(colaboradorRepository.findAll());
     }
 
     public ColaboradorDTO buscarPorId(Integer colaboradorId) {
-        return colaboradorMapper.toDto(buscar(colaboradorId));
+        ColaboradorDTO colaboradorDTO = colaboradorMapper.toDto(buscar(colaboradorId));
+        colaboradorDTO.setCompetencias(competenciaColaboradorService.buscarCompetenciasDoColaborador(colaboradorId));
+        return colaboradorDTO;
     }
 
-    public void salvar(ColaboradorDTO colaboradorDTO) {
+    public ColaboradorDTO salvar(ColaboradorDTO colaboradorDTO) {
+        Colaborador colaborador = colaboradorRepository.save(colaboradorMapper.toEntity(colaboradorDTO));
+        Set<CompetenciaDoColaboradorDTO> competenciasDTO = colaboradorDTO.getCompetencias();
+        List<CompetenciaColaborador> competencias = competenciasDTO.stream().map(competencia -> new CompetenciaColaborador(
+                        new CompetenciaColaboradorId(competencia.getId(), colaborador.getId()), competencia.getNivel()))
+                .collect(Collectors.toList());
+        competenciaColaboradorService.salvar(competencias);
+        colaboradorDTO = colaboradorMapper.toDto(colaborador);
+        colaboradorDTO.setCompetencias(competenciasDTO);
+        return colaboradorDTO;
+    }
+
+    public ColaboradorDTO atualizar(ColaboradorDTO colaboradorDTO) {
         Colaborador colaborador = colaboradorMapper.toEntity(colaboradorDTO);
-        colaboradorMapper.toDto(colaboradorRepository.save(colaborador));
+        Set<CompetenciaDoColaboradorDTO> competenciasDTO = colaboradorDTO.getCompetencias();
+        List<CompetenciaColaborador> competencias = competenciasDTO.stream()
+                .map(competencia -> new CompetenciaColaborador(
+                        new CompetenciaColaboradorId(competencia.getId(), colaborador.getId()), competencia.getNivel()))
+                .collect(Collectors.toList());
+        competenciaColaboradorService.excluir(colaborador.getId());
+        colaboradorRepository.save(colaborador);
+        competenciaColaboradorService.salvar(competencias);
+        colaboradorDTO = colaboradorMapper.toDto(colaborador);
+        colaboradorDTO.setCompetencias(competenciasDTO);
+        return colaboradorDTO;
     }
 
     public void excluir(Integer colaboradorId) {
         try {
+            competenciaColaboradorService.excluir(colaboradorId);
             colaboradorRepository.deleteById(colaboradorId);
             colaboradorRepository.flush();
         } catch (EmptyResultDataAccessException e) {
@@ -54,16 +83,5 @@ public class ColaboradorService {
     public Colaborador buscar(Integer colaboradorId) {
         return colaboradorRepository.findById(colaboradorId).orElseThrow(() -> new EntidadeNaoEncontradaException(
                 MSG_COLABORADOR_NAO_ENCONTRADO));
-    }
-
-    private Set<CompetenciaColaborador> adicionarCompetencias(Colaborador colaborador) {
-        colaborador.getCompetencias().forEach(item -> {
-            if (colaborador.getId() != null) {
-                item.getId().setColaboradorId(colaborador.getId());
-            }
-            item.setColaborador(colaborador);
-            item.getCompetencia().setId(item.getCompetencia().getId());
-        });
-        return colaborador.getCompetencias();
     }
 }

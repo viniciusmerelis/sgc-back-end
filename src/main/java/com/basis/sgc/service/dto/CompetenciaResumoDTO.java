@@ -3,11 +3,9 @@ package com.basis.sgc.service.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serializable;
-
 @Getter
 @Setter
-public class CompetenciaResumoDTO implements Serializable {
+public class CompetenciaResumoDTO {
     private Integer id;
     private String nome;
 }

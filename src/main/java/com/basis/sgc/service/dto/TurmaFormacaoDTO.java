@@ -17,5 +17,5 @@ public class TurmaFormacaoDTO implements Serializable {
     private LocalDateTime dataInicio;
     private LocalDateTime dataTermino;
     private StatusDTO status;
-    private Set<CompetenciaColaboradorDTO> competenciasColaboradores = new HashSet<>();
+//    private Set<CompetenciaColaboradorDTO> competenciasColaboradores = new HashSet<>();
 }

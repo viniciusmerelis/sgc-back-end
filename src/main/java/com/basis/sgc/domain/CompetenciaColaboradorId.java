@@ -1,8 +1,6 @@
 package com.basis.sgc.domain;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -12,6 +10,8 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Embeddable
+@NoArgsConstructor
+@AllArgsConstructor
 public class CompetenciaColaboradorId implements Serializable {
     private static final long serialVersionUID = 1L;
 
