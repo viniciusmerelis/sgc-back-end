@@ -42,10 +42,10 @@ public class ColaboradorService {
     }
 
     public ColaboradorDTO salvar(ColaboradorDTO colaboradorDTO) {
-        Colaborador colaborador = colaboradorRepository.save(colaboradorMapper.toEntity(colaboradorDTO));
-        if(existeColaboradorComCompetencia(colaborador.getId())) {
-            competenciaColaboradorService.excluir(colaborador.getId());
+        if(colaboradorDTO.getId() != null) {
+            competenciaColaboradorService.excluir(colaboradorDTO.getId());
         }
+        Colaborador colaborador = colaboradorRepository.save(colaboradorMapper.toEntity(colaboradorDTO));
         Set<CompetenciaDoColaboradorDTO> competenciasDTO = colaboradorDTO.getCompetencias();
         adicionarCompetenciasEColaboradores(competenciasDTO, colaborador);
         colaboradorDTO = colaboradorMapper.toDto(colaborador);
@@ -75,9 +75,5 @@ public class ColaboradorService {
                         new CompetenciaColaboradorId(competencia.getId(), colaborador.getId()), competencia.getNivel()))
                 .collect(Collectors.toList());
         return competenciaColaboradorService.salvar(competencias);
-    }
-
-    boolean existeColaboradorComCompetencia(Integer colaboradorId) {
-        return competenciaColaboradorService.isColaboradorComCompetencia(colaboradorId);
     }
 }

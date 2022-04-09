@@ -2,6 +2,8 @@ package com.basis.sgc.controller;
 
 import com.basis.sgc.service.ColaboradorService;
 import com.basis.sgc.service.dto.ColaboradorDTO;
+import com.basis.sgc.view.ColaboradorView;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ public class ColaboradorController {
 
     private final ColaboradorService colaboradorService;
 
+    @JsonView(ColaboradorView.Listagem.class)
     @GetMapping
     public ResponseEntity<List<ColaboradorDTO>> listar() {
         return new ResponseEntity<>(colaboradorService.listar(), HttpStatus.OK);
