@@ -21,15 +21,15 @@ public class CompetenciaColaboradorService {
         return competenciaColaboradorRepository.buscarCompetenciasDoColaborador(colaboradorId);
     }
 
-    public Set<CompetenciaDoColaboradorDTO> buscarCompetenciasDosColaboradores(List<Integer> colaboradoresIds) {
-        return competenciaColaboradorRepository.buscarCompetenciasDosColaboradores(colaboradoresIds);
-    }
-
-    public void salvar(List<CompetenciaColaborador> competencias) {
-        competenciaColaboradorRepository.saveAll(competencias);
+    public List<CompetenciaColaborador> salvar(List<CompetenciaColaborador> competencias) {
+        return competenciaColaboradorRepository.saveAll(competencias);
     }
 
     public void excluir(Integer colaboradorId) {
         competenciaColaboradorRepository.excluirCompetenciasDoColaborador(colaboradorId);
+    }
+
+    public boolean isColaboradorComCompetencia(Integer colaboradorId) {
+        return competenciaColaboradorRepository.isColaboradorComCompetencia(colaboradorId);
     }
 }

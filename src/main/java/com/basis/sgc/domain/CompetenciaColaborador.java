@@ -17,16 +17,6 @@ public class CompetenciaColaborador implements Serializable {
     @EmbeddedId
     private CompetenciaColaboradorId id;
 
-//    @MapsId("competenciaId")
-//    @ManyToOne(optional = false)
-//    @JoinColumn(name = "competencia_id", referencedColumnName = "id", insertable = false, updatable = false)
-//    private Competencia competencia;
-//
-//    @MapsId("colaboradorId")
-//    @ManyToOne(optional = false)
-//    @JoinColumn(name = "colaborador_id", referencedColumnName = "id", insertable = false, updatable = false)
-//    private Colaborador colaborador;
-
     @Enumerated(value = EnumType.ORDINAL)
     @Column(name = "nivel")
     private Nivel nivel;

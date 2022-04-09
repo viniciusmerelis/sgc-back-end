@@ -7,8 +7,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "colaborador")
@@ -43,7 +41,4 @@ public class Colaborador implements Serializable {
     @ManyToOne
     @JoinColumn(name = "senioridade_id", nullable = false)
     private Senioridade senioridade;
-
-//    @OneToMany(mappedBy = "colaborador")
-//    private Set<CompetenciaColaborador> competencias = new HashSet<>();
 }

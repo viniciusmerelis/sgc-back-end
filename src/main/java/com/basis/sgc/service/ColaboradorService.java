@@ -43,26 +43,11 @@ public class ColaboradorService {
 
     public ColaboradorDTO salvar(ColaboradorDTO colaboradorDTO) {
         Colaborador colaborador = colaboradorRepository.save(colaboradorMapper.toEntity(colaboradorDTO));
+        if(existeColaboradorComCompetencia(colaborador.getId())) {
+            competenciaColaboradorService.excluir(colaborador.getId());
+        }
         Set<CompetenciaDoColaboradorDTO> competenciasDTO = colaboradorDTO.getCompetencias();
-        List<CompetenciaColaborador> competencias = competenciasDTO.stream().map(competencia -> new CompetenciaColaborador(
-                        new CompetenciaColaboradorId(competencia.getId(), colaborador.getId()), competencia.getNivel()))
-                .collect(Collectors.toList());
-        competenciaColaboradorService.salvar(competencias);
-        colaboradorDTO = colaboradorMapper.toDto(colaborador);
-        colaboradorDTO.setCompetencias(competenciasDTO);
-        return colaboradorDTO;
-    }
-
-    public ColaboradorDTO atualizar(ColaboradorDTO colaboradorDTO) {
-        Colaborador colaborador = colaboradorMapper.toEntity(colaboradorDTO);
-        Set<CompetenciaDoColaboradorDTO> competenciasDTO = colaboradorDTO.getCompetencias();
-        List<CompetenciaColaborador> competencias = competenciasDTO.stream()
-                .map(competencia -> new CompetenciaColaborador(
-                        new CompetenciaColaboradorId(competencia.getId(), colaborador.getId()), competencia.getNivel()))
-                .collect(Collectors.toList());
-        competenciaColaboradorService.excluir(colaborador.getId());
-        colaboradorRepository.save(colaborador);
-        competenciaColaboradorService.salvar(competencias);
+        adicionarCompetenciasEColaboradores(competenciasDTO, colaborador);
         colaboradorDTO = colaboradorMapper.toDto(colaborador);
         colaboradorDTO.setCompetencias(competenciasDTO);
         return colaboradorDTO;
@@ -83,5 +68,16 @@ public class ColaboradorService {
     public Colaborador buscar(Integer colaboradorId) {
         return colaboradorRepository.findById(colaboradorId).orElseThrow(() -> new EntidadeNaoEncontradaException(
                 MSG_COLABORADOR_NAO_ENCONTRADO));
+    }
+
+    private List<CompetenciaColaborador> adicionarCompetenciasEColaboradores(Set<CompetenciaDoColaboradorDTO> competenciasDTO, Colaborador colaborador) {
+        List<CompetenciaColaborador> competencias = competenciasDTO.stream().map(competencia -> new CompetenciaColaborador(
+                        new CompetenciaColaboradorId(competencia.getId(), colaborador.getId()), competencia.getNivel()))
+                .collect(Collectors.toList());
+        return competenciaColaboradorService.salvar(competencias);
+    }
+
+    boolean existeColaboradorComCompetencia(Integer colaboradorId) {
+        return competenciaColaboradorService.isColaboradorComCompetencia(colaboradorId);
     }
 }
