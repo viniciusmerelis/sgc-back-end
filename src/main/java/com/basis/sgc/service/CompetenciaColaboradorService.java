@@ -28,8 +28,4 @@ public class CompetenciaColaboradorService {
     public void excluir(Integer colaboradorId) {
         competenciaColaboradorRepository.excluirCompetenciasDoColaborador(colaboradorId);
     }
-
-    public boolean isColaboradorComCompetencia(Integer colaboradorId) {
-        return competenciaColaboradorRepository.isColaboradorComCompetencia(colaboradorId);
-    }
 }

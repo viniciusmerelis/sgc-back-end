@@ -1,5 +1,7 @@
 package com.basis.sgc.service.dto;
 
+import com.basis.sgc.view.ColaboradorView;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,5 +13,6 @@ import java.io.Serializable;
 public class SenioridadeDTO implements Serializable {
     @NotNull
     private Integer id;
+    @JsonView(ColaboradorView.Listagem.class)
     private String nome;
 }
