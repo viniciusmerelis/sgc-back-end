@@ -15,6 +15,7 @@ import java.util.Set;
 @Getter
 @Setter
 public class ColaboradorDTO implements Serializable {
+//    TODO: Anotar as propriedades para listagem com JsonView
     private Integer id;
     @NotBlank
     private String nome;

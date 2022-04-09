@@ -34,7 +34,7 @@ public class ColaboradorController {
 
     @PutMapping
     public ResponseEntity<ColaboradorDTO> atualizar(@RequestBody @Valid ColaboradorDTO colaboradorDTO) {
-        colaboradorService.atualizar(colaboradorDTO);
+        colaboradorService.salvar(colaboradorDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
