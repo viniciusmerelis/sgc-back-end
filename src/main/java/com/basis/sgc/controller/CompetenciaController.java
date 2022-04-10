@@ -1,8 +1,8 @@
 package com.basis.sgc.controller;
 
 import com.basis.sgc.service.CompetenciaService;
-import com.basis.sgc.service.dto.CompetenciaColaboradorNivelMaximoDTO;
 import com.basis.sgc.service.dto.CompetenciaDTO;
+import com.basis.sgc.service.dto.DropdownDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,8 +46,8 @@ public class CompetenciaController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping(params = "colaboradores=nivel-maximo")
-    public ResponseEntity<List<CompetenciaColaboradorNivelMaximoDTO>> buscarColaboradoresNivelMaximo() {
-        return new ResponseEntity<>(competenciaService.buscarColaboradoresNivelMaximo(), HttpStatus.OK);
+    @GetMapping(value = "/{competenciaId}", params = "colaboradores=nivel-maximo")
+    public ResponseEntity<List<DropdownDTO>> buscarColaboradoresComCompetenciaNivelMaximo(@PathVariable Integer competenciaId) {
+        return new ResponseEntity<>(competenciaService.buscarColaboradoresComCompetenciaNivelMaximo(competenciaId), HttpStatus.OK);
     }
 }

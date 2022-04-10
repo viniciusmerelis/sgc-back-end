@@ -35,7 +35,7 @@ public class TurmaFormacaoService {
 
     public TurmaFormacaoDTO salvar(TurmaFormacaoDTO turmaFormacaoDTO) {
         TurmaFormacao turma = turmaFormacaoMapper.toEntity(turmaFormacaoDTO);
-        turma.setCompetenciasColaboradores(adicionarCompetenciasColaboradores(turma));
+        turma.setCompetenciasEColaboradores(adicionarCompetenciasColaboradores(turma));
         return turmaFormacaoMapper.toDto(turmaFormacaoRepository.save(turma));
     }
 
@@ -53,13 +53,12 @@ public class TurmaFormacaoService {
     }
 
     private Set<TurmaCompetenciaColaborador> adicionarCompetenciasColaboradores(TurmaFormacao turma) {
-//        TODO: Fazer validação se existe relação da competencia com o colaborador
-        turma.getCompetenciasColaboradores().forEach(item -> {
+        turma.getCompetenciasEColaboradores().forEach(item -> {
             if (turma.getId() != null) {
                 item.getId().setTurmaId(turma.getId());
             }
             item.setTurma(turma);
         });
-        return turma.getCompetenciasColaboradores();
+        return turma.getCompetenciasEColaboradores();
     }
 }

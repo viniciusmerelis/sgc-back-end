@@ -3,6 +3,7 @@ package com.basis.sgc.service;
 import com.basis.sgc.domain.CompetenciaColaborador;
 import com.basis.sgc.repository.CompetenciaColaboradorRepository;
 import com.basis.sgc.service.dto.CompetenciaDoColaboradorDTO;
+import com.basis.sgc.service.dto.DropdownDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,5 +28,9 @@ public class CompetenciaColaboradorService {
 
     public void excluir(Integer colaboradorId) {
         competenciaColaboradorRepository.excluirCompetenciasDoColaborador(colaboradorId);
+    }
+
+    public List<DropdownDTO> buscarColaboradoresComCompetenciaNivelMaximo(Integer competenciaId) {
+        return competenciaColaboradorRepository.buscarColaboradoresPelaCompetenciaNivelMaximo(competenciaId);
     }
 }

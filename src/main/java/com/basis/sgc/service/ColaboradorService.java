@@ -8,6 +8,7 @@ import com.basis.sgc.exception.EntidadeNaoEncontradaException;
 import com.basis.sgc.repository.ColaboradorRepository;
 import com.basis.sgc.service.dto.ColaboradorDTO;
 import com.basis.sgc.service.dto.CompetenciaDoColaboradorDTO;
+import com.basis.sgc.service.dto.DropdownDTO;
 import com.basis.sgc.service.mapper.ColaboradorMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
