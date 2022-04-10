@@ -2,6 +2,8 @@ package com.basis.sgc.controller;
 
 import com.basis.sgc.service.TurmaFormacaoService;
 import com.basis.sgc.service.dto.TurmaFormacaoDTO;
+import com.basis.sgc.view.TurmaFormacaoView;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ public class TurmaFormacaoController {
 
     private final TurmaFormacaoService turmaFormacaoService;
 
+    @JsonView(TurmaFormacaoView.Listagem.class)
     @GetMapping()
     public ResponseEntity<List<TurmaFormacaoDTO>> listar() {
         return new ResponseEntity<>(turmaFormacaoService.listar(), HttpStatus.OK);

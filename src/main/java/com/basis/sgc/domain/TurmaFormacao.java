@@ -39,5 +39,5 @@ public class TurmaFormacao implements Serializable {
     private Status status;
 
     @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<TurmaCompetenciaColaborador> competenciasColaboradores = new HashSet<>();
+    private Set<TurmaCompetenciaColaborador> competenciasEColaboradores = new HashSet<>();
 }
