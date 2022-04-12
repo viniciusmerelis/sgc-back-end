@@ -2,12 +2,21 @@ package com.basis.sgc.controller;
 
 import com.basis.sgc.service.TurmaFormacaoService;
 import com.basis.sgc.service.dto.TurmaFormacaoDTO;
-import com.basis.sgc.view.TurmaFormacaoView;
+import com.basis.sgc.view.Views;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -19,10 +28,10 @@ public class TurmaFormacaoController {
 
     private final TurmaFormacaoService turmaFormacaoService;
 
-    @JsonView(TurmaFormacaoView.Listagem.class)
+    @JsonView(Views.Listagem.class)
     @GetMapping()
-    public ResponseEntity<List<TurmaFormacaoDTO>> listar() {
-        return new ResponseEntity<>(turmaFormacaoService.listar(), HttpStatus.OK);
+    public ResponseEntity<Page<TurmaFormacaoDTO>> listar(Pageable pageable) {
+        return new ResponseEntity<>(turmaFormacaoService.listar(pageable), HttpStatus.OK);
     }
 
     @GetMapping("/{turmaId}")

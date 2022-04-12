@@ -13,6 +13,9 @@ import com.basis.sgc.service.mapper.ColaboradorMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -32,8 +35,11 @@ public class ColaboradorService {
     private final ColaboradorMapper colaboradorMapper;
     private final CompetenciaColaboradorService competenciaColaboradorService;
 
-    public List<ColaboradorDTO> listar() {
-        return colaboradorMapper.toDto(colaboradorRepository.findAll());
+    public Page<ColaboradorDTO> listar(Pageable pageable) {
+        Page<Colaborador> colaboradoresPages = colaboradorRepository.findAll(pageable);
+        List<ColaboradorDTO> colaboradoresDTO = colaboradorMapper.toDto(colaboradoresPages.getContent());
+        Page<ColaboradorDTO> colaboradoresPagesDTO = new PageImpl<>(colaboradoresDTO, pageable, colaboradoresPages.getTotalElements());
+        return colaboradoresPagesDTO;
     }
 
     public ColaboradorDTO buscarPorId(Integer colaboradorId) {
@@ -71,7 +77,7 @@ public class ColaboradorService {
                 MSG_COLABORADOR_NAO_ENCONTRADO));
     }
 
-    private List<CompetenciaColaborador> adicionarCompetenciasEColaboradores(Set<CompetenciaDoColaboradorDTO> competenciasDTO, Colaborador colaborador) {
+    private List<CompetenciaColaborador> adicionarCompetenciasEColaboradores(Set<CompetenciaDoColaboradorDTO> competenciasDTO,Colaborador colaborador) {
         List<CompetenciaColaborador> competencias = competenciasDTO.stream().map(competencia -> new CompetenciaColaborador(
                         new CompetenciaColaboradorId(competencia.getId(), colaborador.getId()), competencia.getNivel()))
                 .collect(Collectors.toList());

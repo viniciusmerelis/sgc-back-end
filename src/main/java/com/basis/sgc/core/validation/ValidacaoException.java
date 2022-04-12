@@ -1,4 +1,4 @@
-package com.basis.sgc.config;
+package com.basis.sgc.core.validation;
 
 import org.springframework.validation.BindingResult;
 
@@ -8,8 +8,6 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class ValidacaoException extends RuntimeException {
-	
 	private static final long serialVersionUID = 1L;
 	private BindingResult bindingResult;
-	
 }
