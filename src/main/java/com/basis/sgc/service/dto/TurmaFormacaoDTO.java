@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -15,14 +18,23 @@ import java.util.Set;
 public class TurmaFormacaoDTO implements Serializable {
     @JsonView(Views.Listagem.class)
     private Integer id;
+
     @JsonView(Views.Listagem.class)
+    @NotBlank
     private String nome;
+
     @JsonView(Views.Listagem.class)
+    @NotBlank
     private String descricao;
+
     @JsonView(Views.Listagem.class)
+    @NotNull
     private LocalDateTime dataInicio;
+
     @JsonView(Views.Listagem.class)
+    @Null
     private LocalDateTime dataTermino;
+
     @JsonView(Views.Listagem.class)
     private StatusDTO status;
     private Set<CompetenciaEColaboradorDTO> competenciasEColaboradores = new HashSet<>();

@@ -5,6 +5,8 @@ import com.basis.sgc.service.dto.TurmaFormacaoDTO;
 import com.basis.sgc.view.Views;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,8 +30,8 @@ public class TurmaFormacaoController {
 
     @JsonView(Views.Listagem.class)
     @GetMapping()
-    public ResponseEntity<List<TurmaFormacaoDTO>> listar() {
-        return new ResponseEntity<>(turmaFormacaoService.listar(), HttpStatus.OK);
+    public ResponseEntity<Page<TurmaFormacaoDTO>> listar(Pageable pageable) {
+        return new ResponseEntity<>(turmaFormacaoService.listar(pageable), HttpStatus.OK);
     }
 
     @GetMapping("/{turmaId}")
