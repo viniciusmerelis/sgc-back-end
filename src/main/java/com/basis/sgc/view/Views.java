@@ -1,5 +1,5 @@
 package com.basis.sgc.view;
 
-public interface ColaboradorView {
+public interface Views {
     public interface Listagem {}
 }
