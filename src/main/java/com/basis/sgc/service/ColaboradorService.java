@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -49,10 +50,11 @@ public class ColaboradorService {
     }
 
     public ColaboradorDTO salvar(ColaboradorDTO colaboradorDTO) {
-        if(colaboradorDTO.getId() != null) {
+        Colaborador colaborador = colaboradorMapper.toEntity(colaboradorDTO);
+        if(isColaboradorIdNull(colaborador)) {
             competenciaColaboradorService.excluir(colaboradorDTO.getId());
         }
-        Colaborador colaborador = colaboradorRepository.save(colaboradorMapper.toEntity(colaboradorDTO));
+        colaborador = colaboradorRepository.save(colaborador);
         Set<CompetenciaDoColaboradorDTO> competenciasDTO = colaboradorDTO.getCompetencias();
         adicionarCompetenciasEColaboradores(competenciasDTO, colaborador);
         colaboradorDTO = colaboradorMapper.toDto(colaborador);
@@ -82,5 +84,9 @@ public class ColaboradorService {
                         new CompetenciaColaboradorId(competencia.getId(), colaborador.getId()), competencia.getNivel()))
                 .collect(Collectors.toList());
         return competenciaColaboradorService.salvar(competencias);
+    }
+
+    private boolean isColaboradorIdNull(Colaborador colaborador) {
+        return Objects.isNull(colaborador.getId());
     }
 }
