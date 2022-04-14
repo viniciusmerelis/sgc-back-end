@@ -56,7 +56,7 @@ public class CompetenciaService {
                 .orElseThrow(() -> new EntidadeNaoEncontradaException(MSG_COMPETENCIA_NAO_ENCONTRADA));
     }
 
-    public List<DropdownDTO> buscarColaboradoresComCompetenciaNivelMaximo(Integer competenciaId) {
+    public List<DropdownDTO> buscarColaboradoresComNivelMaximoNaCompetencia(Integer competenciaId) {
         return competenciaColaboradorService.buscarColaboradoresComCompetenciaNivelMaximo(competenciaId);
     }
 }

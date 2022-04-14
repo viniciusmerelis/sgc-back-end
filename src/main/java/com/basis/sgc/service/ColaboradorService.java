@@ -8,7 +8,6 @@ import com.basis.sgc.exception.EntidadeNaoEncontradaException;
 import com.basis.sgc.repository.ColaboradorRepository;
 import com.basis.sgc.service.dto.ColaboradorDTO;
 import com.basis.sgc.service.dto.CompetenciaDoColaboradorDTO;
-import com.basis.sgc.service.dto.DropdownDTO;
 import com.basis.sgc.service.mapper.ColaboradorMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -36,11 +35,10 @@ public class ColaboradorService {
     private final ColaboradorMapper colaboradorMapper;
     private final CompetenciaColaboradorService competenciaColaboradorService;
 
-    public Page<ColaboradorDTO> listar(Pageable pageable) {
+    public List<ColaboradorDTO> listar(Pageable pageable) {
         Page<Colaborador> colaboradoresPages = colaboradorRepository.findAll(pageable);
         List<ColaboradorDTO> colaboradoresDTO = colaboradorMapper.toDto(colaboradoresPages.getContent());
-        Page<ColaboradorDTO> colaboradoresPagesDTO = new PageImpl<>(colaboradoresDTO, pageable, colaboradoresPages.getTotalElements());
-        return colaboradoresPagesDTO;
+        return colaboradoresDTO;
     }
 
     public ColaboradorDTO buscarPorId(Integer colaboradorId) {
