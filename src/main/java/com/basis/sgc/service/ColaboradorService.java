@@ -8,7 +8,6 @@ import com.basis.sgc.exception.EntidadeNaoEncontradaException;
 import com.basis.sgc.repository.ColaboradorRepository;
 import com.basis.sgc.service.dto.ColaboradorDTO;
 import com.basis.sgc.service.dto.CompetenciaDoColaboradorDTO;
-import com.basis.sgc.service.dto.DropdownDTO;
 import com.basis.sgc.service.mapper.ColaboradorMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -20,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -35,11 +35,10 @@ public class ColaboradorService {
     private final ColaboradorMapper colaboradorMapper;
     private final CompetenciaColaboradorService competenciaColaboradorService;
 
-    public Page<ColaboradorDTO> listar(Pageable pageable) {
+    public List<ColaboradorDTO> listar(Pageable pageable) {
         Page<Colaborador> colaboradoresPages = colaboradorRepository.findAll(pageable);
         List<ColaboradorDTO> colaboradoresDTO = colaboradorMapper.toDto(colaboradoresPages.getContent());
-        Page<ColaboradorDTO> colaboradoresPagesDTO = new PageImpl<>(colaboradoresDTO, pageable, colaboradoresPages.getTotalElements());
-        return colaboradoresPagesDTO;
+        return colaboradoresDTO;
     }
 
     public ColaboradorDTO buscarPorId(Integer colaboradorId) {
@@ -49,10 +48,11 @@ public class ColaboradorService {
     }
 
     public ColaboradorDTO salvar(ColaboradorDTO colaboradorDTO) {
-        if(colaboradorDTO.getId() != null) {
+        Colaborador colaborador = colaboradorMapper.toEntity(colaboradorDTO);
+        if(isColaboradorIdNull(colaborador)) {
             competenciaColaboradorService.excluir(colaboradorDTO.getId());
         }
-        Colaborador colaborador = colaboradorRepository.save(colaboradorMapper.toEntity(colaboradorDTO));
+        colaborador = colaboradorRepository.save(colaborador);
         Set<CompetenciaDoColaboradorDTO> competenciasDTO = colaboradorDTO.getCompetencias();
         adicionarCompetenciasEColaboradores(competenciasDTO, colaborador);
         colaboradorDTO = colaboradorMapper.toDto(colaborador);
@@ -82,5 +82,9 @@ public class ColaboradorService {
                         new CompetenciaColaboradorId(competencia.getId(), colaborador.getId()), competencia.getNivel()))
                 .collect(Collectors.toList());
         return competenciaColaboradorService.salvar(competencias);
+    }
+
+    private boolean isColaboradorIdNull(Colaborador colaborador) {
+        return Objects.isNull(colaborador.getId());
     }
 }

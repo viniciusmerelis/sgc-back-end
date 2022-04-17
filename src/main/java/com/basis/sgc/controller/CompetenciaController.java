@@ -47,7 +47,7 @@ public class CompetenciaController {
     }
 
     @GetMapping(value = "/{competenciaId}", params = "colaboradores=nivel-maximo")
-    public ResponseEntity<List<DropdownDTO>> buscarColaboradoresComCompetenciaNivelMaximo(@PathVariable Integer competenciaId) {
-        return new ResponseEntity<>(competenciaService.buscarColaboradoresComCompetenciaNivelMaximo(competenciaId), HttpStatus.OK);
+    public ResponseEntity<List<DropdownDTO>> buscarColaboradoresComNivelMaximoNaCompetencia(@PathVariable Integer competenciaId) {
+        return new ResponseEntity<>(competenciaService.buscarColaboradoresComNivelMaximoNaCompetencia(competenciaId), HttpStatus.OK);
     }
 }

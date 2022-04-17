@@ -37,5 +37,5 @@ public interface CompetenciaColaboradorRepository extends JpaRepository<Competen
             "from CompetenciaColaborador cc " +
             "join Colaborador c on c.id = cc.id.colaboradorId " +
             "where cc.id.competenciaId = :competenciaId and cc.nivel = 2")
-    List<DropdownDTO> buscarColaboradoresPelaCompetenciaNivelMaximo(@Param("competenciaId") Integer competenciaId);
+    List<DropdownDTO> buscarColaboradoresComNivelMaximoNaCompetencia(@Param("competenciaId") Integer competenciaId);
 }

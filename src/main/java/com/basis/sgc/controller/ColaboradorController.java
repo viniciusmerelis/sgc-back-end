@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/colaboradores")
@@ -29,7 +30,7 @@ public class ColaboradorController {
 
     @JsonView(Views.Listagem.class)
     @GetMapping
-    public ResponseEntity<Page<ColaboradorDTO>> listar(Pageable pegeable) {
+    public ResponseEntity<List<ColaboradorDTO>> listar(Pageable pegeable) {
         return new ResponseEntity<>(colaboradorService.listar(pegeable), HttpStatus.OK);
     }
 

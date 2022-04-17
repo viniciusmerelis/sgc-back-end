@@ -31,6 +31,6 @@ public class CompetenciaColaboradorService {
     }
 
     public List<DropdownDTO> buscarColaboradoresComCompetenciaNivelMaximo(Integer competenciaId) {
-        return competenciaColaboradorRepository.buscarColaboradoresPelaCompetenciaNivelMaximo(competenciaId);
+        return competenciaColaboradorRepository.buscarColaboradoresComNivelMaximoNaCompetencia(competenciaId);
     }
 }
