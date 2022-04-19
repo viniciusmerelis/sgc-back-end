@@ -1,5 +1,7 @@
 package com.basis.sgc.repository;
 
+import com.basis.sgc.domain.CompetenciaColaborador;
+import com.basis.sgc.domain.CompetenciaColaboradorId;
 import com.basis.sgc.service.dto.CompetenciaDoColaboradorDTO;
 import com.basis.sgc.service.dto.DropdownDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -7,9 +9,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
-import com.basis.sgc.domain.CompetenciaColaborador;
-import com.basis.sgc.domain.CompetenciaColaboradorId;
 
 import java.util.List;
 import java.util.Set;
