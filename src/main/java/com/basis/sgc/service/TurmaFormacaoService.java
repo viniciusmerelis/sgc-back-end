@@ -8,9 +8,6 @@ import com.basis.sgc.repository.TurmaFormacaoRepository;
 import com.basis.sgc.service.dto.TurmaFormacaoDTO;
 import com.basis.sgc.service.mapper.TurmaFormacaoMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -28,11 +25,8 @@ public class TurmaFormacaoService {
     private final TurmaFormacaoRepository turmaFormacaoRepository;
     private final TurmaFormacaoMapper turmaFormacaoMapper;
 
-    public Page<TurmaFormacaoDTO> listar(Pageable pageable) {
-        Page<TurmaFormacao> turmasPages = turmaFormacaoRepository.findAll(pageable);
-        List<TurmaFormacaoDTO> turmasDTO = turmaFormacaoMapper.toDto(turmasPages.getContent());
-        Page<TurmaFormacaoDTO> turmasPagesDTO = new PageImpl<>(turmasDTO, pageable, turmasPages.getTotalElements());
-        return turmasPagesDTO;
+    public List<TurmaFormacaoDTO> listar() {
+        return turmaFormacaoMapper.toDto(turmaFormacaoRepository.findAll());
     }
 
     public TurmaFormacaoDTO buscarPorId(Integer turmaId) {
