@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -32,10 +31,11 @@ public class TurmaFormacaoDTO implements Serializable {
     private LocalDateTime dataInicio;
 
     @JsonView(Views.Listagem.class)
-    @Null
+    @NotNull
     private LocalDateTime dataTermino;
 
     @JsonView(Views.Listagem.class)
+    @NotNull
     private StatusDTO status;
     private Set<CompetenciaEColaboradorDTO> competenciasEColaboradores = new HashSet<>();
 }
