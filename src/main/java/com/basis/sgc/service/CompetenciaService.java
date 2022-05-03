@@ -4,8 +4,8 @@ import com.basis.sgc.domain.Competencia;
 import com.basis.sgc.exception.EntidadeEmUsoException;
 import com.basis.sgc.exception.EntidadeNaoEncontradaException;
 import com.basis.sgc.repository.CompetenciaRepository;
+import com.basis.sgc.service.dto.ColaboradorResumoDTO;
 import com.basis.sgc.service.dto.CompetenciaDTO;
-import com.basis.sgc.service.dto.DropdownDTO;
 import com.basis.sgc.service.mapper.CompetenciaMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -56,7 +56,7 @@ public class CompetenciaService {
                 .orElseThrow(() -> new EntidadeNaoEncontradaException(MSG_COMPETENCIA_NAO_ENCONTRADA));
     }
 
-    public List<DropdownDTO> buscarColaboradoresComNivelMaximoNaCompetencia(Integer competenciaId) {
+    public List<ColaboradorResumoDTO> buscarColaboradoresComNivelMaximoNaCompetencia(Integer competenciaId) {
         return competenciaColaboradorService.buscarColaboradoresComCompetenciaNivelMaximo(competenciaId);
     }
 }

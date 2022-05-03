@@ -1,5 +1,7 @@
 package com.basis.sgc.service;
 
+import com.basis.sgc.domain.Colaborador;
+import com.basis.sgc.domain.Competencia;
 import com.basis.sgc.domain.TurmaCompetenciaColaborador;
 import com.basis.sgc.domain.TurmaFormacao;
 import com.basis.sgc.exception.EntidadeNaoEncontradaException;
@@ -19,11 +21,13 @@ import java.util.Set;
 @Transactional
 public class TurmaFormacaoService {
 
-    private static final String MSG_TURMA_NAO_ENCONTRADA = "Não existe um cadastro dessa turma formação no sistema";
+    private static final String MSG_TURMA_NAO_ENCONTRADA = "Não existe um cadastro de turma formação no sistema com código %d";
     private static final String MSG_ERRO_EXCLUIR_TURMA_INICIADA = "Esta turma não pode ser excluida pois está em andamento.";
 
     private final TurmaFormacaoRepository turmaFormacaoRepository;
     private final TurmaFormacaoMapper turmaFormacaoMapper;
+    private final CompetenciaService competenciaService;
+    private final ColaboradorService colaboradorService;
 
     public List<TurmaFormacaoDTO> listar() {
         return turmaFormacaoMapper.toDto(turmaFormacaoRepository.findAll());
@@ -49,7 +53,7 @@ public class TurmaFormacaoService {
 
     public TurmaFormacao buscar(Integer turmaId) {
         return turmaFormacaoRepository.findById(turmaId)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException(MSG_TURMA_NAO_ENCONTRADA + turmaId));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException(String.format(MSG_TURMA_NAO_ENCONTRADA, turmaId)));
     }
 
     private Set<TurmaCompetenciaColaborador> adicionarCompetenciasColaboradores(TurmaFormacao turma) {
@@ -57,7 +61,11 @@ public class TurmaFormacaoService {
             if (turma.getId() != null) {
                 item.getId().setTurmaId(turma.getId());
             }
+            Competencia competencia = competenciaService.buscar(item.getCompetencia().getId());
+            Colaborador colaborador = colaboradorService.buscar(item.getColaborador().getId());
             item.setTurma(turma);
+            item.setCompetencia(competencia);
+            item.setColaborador(colaborador);
         });
         return turma.getCompetenciasEColaboradores();
     }
